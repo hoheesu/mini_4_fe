@@ -2,13 +2,14 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-  },
+    },
   extends: ["eslint:recommended", "plugin:react/recommended"],
   overrides: [
     {
       env: {
         yarn: true,
         node: true,
+        yarn: true,
       },
       files: [".eslintrc.{js,cjs}"],
       parserOptions: {

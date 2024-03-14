@@ -5,6 +5,7 @@ import Main from "../pages/Main";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import VoteDetail from "../pages/VoteDetail";
+import VoteCreate from "../pages/VoteCreate";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: "/vote/detail/",
         element: <VoteDetail />,
+      },
+      {
+        path: "/vote/create",
+        element: <VoteCreate />,
       },
     ],
   },
