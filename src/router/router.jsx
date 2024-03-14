@@ -2,6 +2,9 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Main from "../pages/Main";
+import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
+import VoteDetail from "../pages/VoteDetail";
 import VoteCreate from "../pages/VoteCreate";
 
 export const router = createBrowserRouter([
@@ -12,6 +15,18 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Main />,
+      },
+      {
+        path: "/log-in",
+        element: <Login />,
+      },
+      {
+        path: "/sign-up",
+        element: <SignUp />,
+      },
+      {
+        path: "/vote/detail/",
+        element: <VoteDetail />,
       },
       {
         path: "/vote/create",

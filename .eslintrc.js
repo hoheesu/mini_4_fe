@@ -7,6 +7,7 @@ module.exports = {
   overrides: [
     {
       env: {
+        yarn: true,
         node: true,
         yarn: true,
       },
@@ -23,5 +24,5 @@ module.exports = {
   plugins: ["react"],
   rules: {
     "no-unused-vars": "off", // 사용되지 않는 변수 경고를 끔
-    },
+  },
 };
