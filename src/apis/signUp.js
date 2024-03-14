@@ -1,8 +1,8 @@
-import axios from "axios";
+import { instance } from "./axios";
 
 export const signUp = async (id, pw, nickname) => {
   try {
-    const result = await axios.post("/sign-up", {
+    const result = await instance.post("/sign-up", {
       email: id,
       password: pw,
       nickname,

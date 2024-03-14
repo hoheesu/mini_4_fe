@@ -56,7 +56,7 @@ function Login() {
           />
         </Inputs>
         <Button onClick={onClickLogin}>로그인</Button>
-        <CustomLink to="/sign-up">회원가입</CustomLink>
+        <CustomLink to="/signup">회원가입</CustomLink>
         <CustomLink to="/">홈으로 가기</CustomLink>
       </Form>
     </Wrapper>

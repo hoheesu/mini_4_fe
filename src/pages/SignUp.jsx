@@ -54,8 +54,8 @@ function SignUp() {
       return;
     }
 
-    await signUp(id, pw);
-    navigate("/log-in");
+    await signUp(id, pw, nickname);
+    navigate("/login");
   };
 
   return (
