@@ -14,14 +14,14 @@
 //     };
 //     return [value, onChange];
 // };
-import { useState } from 'react';
+import { useState } from "react";
 
 export const useForm = () => {
-    const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
 
-    const handleChange = (e) => {
+  const handleChange = (e) => {
     setValue(e.target.value);
-    };
+  };
 
-    return [value, handleChange];
+  return [value, handleChange];
 };

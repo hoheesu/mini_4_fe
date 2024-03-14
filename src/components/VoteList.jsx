@@ -19,8 +19,8 @@ function VoteList() {
         return (
           <li key={voteItem.id}>
             <p>{voteItem.title}</p>
-            <p>{voteItem.content}</p>
-            <p>{dateFormatter(voteItem.endDate)}</p>
+            {/* <p>{voteItem.content}</p> */}
+            {/* <p>{dateFormatter(voteItem.endDate)}</p> */}
           </li>
         );
       })}

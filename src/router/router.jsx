@@ -17,17 +17,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "/log-in",
-        element: <Login />
+        element: <Login />,
       },
       {
         path: "/sign-up",
-        element: <SignUp />
-      }
+        element: <SignUp />,
+      },
       {
         path: "/vote/detail/",
         element: <VoteDetail />,
       },
-      
     ],
   },
 ]);
