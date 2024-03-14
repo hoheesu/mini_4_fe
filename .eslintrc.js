@@ -1,6 +1,5 @@
 module.exports = {
   env: {
-    yarn: true,
     browser: true,
     es2021: true,
   },
@@ -8,6 +7,7 @@ module.exports = {
   overrides: [
     {
       env: {
+        yarn: true,
         node: true,
       },
       files: [".eslintrc.{js,cjs}"],
@@ -23,6 +23,5 @@ module.exports = {
   plugins: ["react"],
   rules: {
     "no-unused-vars": "off", // 사용되지 않는 변수 경고를 끔
-    "react/prop-types": "off"
   },
 };
