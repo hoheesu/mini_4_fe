@@ -4,7 +4,7 @@ const cookies = new Cookies();
 
 export const setCookie = (name, value, options) => {
     const defaultOptions = { 
-    path: '/',
+    path: '/', //모든 경로에서 접근 가능
     maxAge: 3600
     };
     const cookieOptions = { ...defaultOptions, ...options };

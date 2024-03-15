@@ -1,4 +1,5 @@
 import { instance } from "./axios";
+import { setCookie } from "../cookies/cookies";
 
 export const signUp = async (id, pw, nickname) => {
   try {
@@ -8,6 +9,7 @@ export const signUp = async (id, pw, nickname) => {
       nickname,
     });
     localStorage.setItem("accessToken", result);
+    setCookie("refreshToken", result);
     alert("회원가입 완료!");
     return result.data;
   } catch (error) {
