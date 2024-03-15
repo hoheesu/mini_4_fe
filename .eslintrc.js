@@ -1,5 +1,6 @@
 module.exports = {
   env: {
+    yarn: true,
     browser: true,
     es2021: true,
     },
@@ -7,9 +8,7 @@ module.exports = {
   overrides: [
     {
       env: {
-        yarn: true,
         node: true,
-        yarn: true,
       },
       files: [".eslintrc.{js,cjs}"],
       parserOptions: {
