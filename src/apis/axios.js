@@ -9,7 +9,7 @@ export const instance = axios.create({
 export const authInstance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
   headers: {
-    Authorization: token,
+    authorization: token,
   },
 });
 
