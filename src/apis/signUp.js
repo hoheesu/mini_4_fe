@@ -13,7 +13,6 @@ export const signUp = async (id, pw, nickname) => {
     alert("회원가입 완료!");
     return result.data;
   } catch (error) {
-    console.log(signUp.result);
     alert(error.response.data.message);
   }
 };
