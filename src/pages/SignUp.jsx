@@ -54,8 +54,8 @@ function SignUp() {
       return;
     }
 
-    await signUp(id, pw);
-    navigate("/log-in");
+    await signUp(id, pw, nickname);
+    navigate("/login");
   };
 
   return (
@@ -79,7 +79,7 @@ function SignUp() {
             onChange={setPw}
           />
         </Inputs>
-        <CustomLink to="/log-in">로그인</CustomLink>
+        <CustomLink to="/login">로그인</CustomLink>
         <Button onClick={onClickSignUp}>회원가입</Button>
         <CustomLink to="/">홈으로 가기</CustomLink>
       </Form>

@@ -7,9 +7,7 @@ module.exports = {
   overrides: [
     {
       env: {
-        yarn: true,
         node: true,
-        yarn: true,
       },
       files: [".eslintrc.{js,cjs}"],
       parserOptions: {

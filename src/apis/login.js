@@ -1,10 +1,9 @@
-import axios from "axios";
+import { instance } from "./axios";
 
 export const login = async (id, pw, navigate) => {
   try {
-    const result = await axios.post("/log-in", { email: id, password: pw });
-    console.log(result);
-    const { accessToken } = result;
+    const result = await instance.post("/log-in", { email: id, password: pw });
+    const { accessToken } = result.data;
     localStorage.setItem("accessToken", accessToken);
     navigate("/");
     return result.data;
