@@ -1,8 +1,9 @@
 module.exports = {
   env: {
+    yarn: true,
     browser: true,
     es2021: true,
-  },
+    },
   extends: ["eslint:recommended", "plugin:react/recommended"],
   overrides: [
     {
@@ -20,5 +21,7 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react"],
-  rules: {},
+  rules: {
+    "no-unused-vars": "off", // 사용되지 않는 변수 경고를 끔
+  },
 };
