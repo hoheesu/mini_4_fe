@@ -1,8 +1,8 @@
-import axios from "axios";
+import { instance } from "./axios";
 
 export const signUp = async (id, pw, nickname) => {
   try {
-    const result = await axios.post("/sign-up", {
+    const result = await instance.post("/sign-up", {
       email: id,
       password: pw,
       nickname,
@@ -11,7 +11,6 @@ export const signUp = async (id, pw, nickname) => {
     alert("회원가입 완료!");
     return result.data;
   } catch (error) {
-    console.log(signUp.result);
     alert(error.response.data.message);
   }
 };

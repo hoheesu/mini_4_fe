@@ -9,7 +9,7 @@ export const instance = axios.create({
 export const authInstance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
   headers: {
-    Authorization: token,
+    authorization: token,
   },
 });
 
@@ -27,3 +27,18 @@ export const authInstance = axios.create({
 //     }
 //   },
 // );
+
+// {
+  // "content": "asdfg",
+  // "title": "asdfsf",
+  // "endDate": "2024-03-15",
+  // "startDate": "2024-03-14",
+  // "options": [
+  //     {
+  //         "content" :"Agdsaf"
+  //     },
+  //     {
+  //         "content": "asdfasdf"
+  //     }
+  // ]
+// }
