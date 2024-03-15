@@ -9,16 +9,19 @@ import {
 import { jwtDecode } from "jwt-decode";
 import dateFormatter from "../util/dateFormatter";
 import percentCalculate from "../util/percentCalculate";
+import { create } from "zustand";
 
 function VoteDetailList() {
   const [voteDetail, setVoteDetail] = useState();
   const [postEdit, setPostEdit] = useState(false);
   const [optionVote, setOptionVote] = useState(0);
+  const [isVote, setIsVote] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
   let jwt = jwtDecode(localStorage.getItem("accessToken").substring(7));
   const userId = useRef(jwt.id);
+  console.log(userId);
 
   const onClickEditVoteDetail = () => {
     confirm("수정하시겠습니까?") ? setPostEdit(true) : setPostEdit(false);
@@ -26,24 +29,26 @@ function VoteDetailList() {
   const onClickDeleteVoteDetail = () => {
     removeVotePost(id);
     navigate("/");
-    // api호출;
   };
   const onClickVoteOption = (optionId) => {
-    // 선택 api post?
     userVoteOption(id, { optionId });
   };
   useEffect(() => {
     setOptionVote(0);
     (async () => {
       const result = await detailVotePost(id);
-      console.log(result);
       for (const option of result.options) {
         setOptionVote((prev) => (prev += option.count));
+        for (const voteHistory of option.voteHistory) {
+          if (voteHistory.userId === userId.current) {
+            setIsVote(true);
+          }
+        }
       }
       setVoteDetail(result);
     })();
-  }, []);
-  console.log(optionVote);
+  }, [id]);
+  console.log(voteDetail);
 
   return (
     <>
@@ -53,7 +58,11 @@ function VoteDetailList() {
         <>
           <h3>{voteDetail.title}</h3>
           <p>{voteDetail.content}</p>
-          <p>{voteDetail.startDate + " ~ " + voteDetail.endDate}</p>
+          <p>
+            {dateFormatter(voteDetail.startDate) +
+              " ~ " +
+              dateFormatter(voteDetail.endDate)}
+          </p>
           <ul>
             {voteDetail.options.map((optionItem) => {
               return (
@@ -95,6 +104,7 @@ function VoteDetailList() {
           <button>수정 취소 </button>
         </>
       )}
+      {isVote ? <p>이미 투표를 하셨습니다.</p> : null}
     </>
   );
 }

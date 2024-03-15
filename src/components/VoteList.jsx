@@ -13,7 +13,6 @@ function VoteList() {
       setVoteList(result);
     })();
   }, []);
-  console.log(voteList);
 
   return (
     <ul>
