@@ -21,7 +21,17 @@ import React, { useEffect, useState } from "react";
 //   Button,
 //   CustomLink,
 // } from "../components/user/Common";
-import { Page, TitleWrap, ContentWrap, InputTitle, Input, InputWrap, ErrorMessageWrap, BottomButton, CustomLink } from "../components/user/Common";
+import {
+  Page,
+  TitleWrap,
+  ContentWrap,
+  InputTitle,
+  Input,
+  InputWrap,
+  ErrorMessageWrap,
+  BottomButton,
+  CustomLink,
+} from "../components/user/Common";
 import { useNavigate } from "react-router-dom";
 import { signUp } from "../apis/signUp";
 import { useForm } from "../hooks/useForm";
@@ -60,15 +70,15 @@ function SignUp() {
   };
 
   const handleNickname = (e) => {
-    setPw(e.target.value);
+    setNickname(e.target.value);
     const regex = /^[a-zA-Z0-9\uAC00-\uD7A3]{3,15}$/;
     if (regex.test(e.target.value)) {
-      setPwValid(true);
+      setNicknameValid(true);
     } else {
-      setPwValid(false);
+      setNicknameValid(false);
     }
   };
-  
+
   const handlePw = (e) => {
     setPw(e.target.value);
     const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,20}$/;
@@ -98,14 +108,14 @@ function SignUp() {
       );
       return;
     }
-    alert ("회원가입 안성~")
+    alert("회원가입 안성~");
     await signUp(id, pw, nickname);
     navigate("/login");
   };
 
   return (
     <Page>
-      <TitleWrap>로그인</TitleWrap>
+      <TitleWrap>회원가입</TitleWrap>
       <ContentWrap>
         <InputTitle>아이디</InputTitle>
         <InputWrap>
@@ -149,21 +159,27 @@ function SignUp() {
         </InputWrap>
         <ErrorMessageWrap>
           {!pwValid && pw.length > 0 && (
-            <div>최소 하나 이상의 대문자, 소문자, 숫자를 포함한 6~20자리 문자로 입력해주세요.</div>
+            <div>
+              최소 하나 이상의 대문자, 소문자, 숫자를 포함한 6~20자리 문자로
+              입력해주세요.
+            </div>
           )}
         </ErrorMessageWrap>
       </ContentWrap>
       <BottomButton onClick={onClickSignUpButton} disabled={notAllow}>
         회원가입 후비고~
       </BottomButton>
-      <CustomLink to='/login' style={{ textDecoration: 'none' }}>로그인하러 후비고~</CustomLink>
-      <CustomLink to='/' style={{ textDecoration: 'none' }}>홈으로 후비고~</CustomLink>
+      <CustomLink to="/login" style={{ textDecoration: "none" }}>
+        로그인하러 후비고~
+      </CustomLink>
+      <CustomLink to="/" style={{ textDecoration: "none" }}>
+        홈으로 후비고~
+      </CustomLink>
     </Page>
   );
 }
 
 export default SignUp;
-
 
 // import React, { useEffect, useState } from "react";
 
@@ -173,8 +189,8 @@ export default SignUp;
 // };
 
 // export default function Login() {
-  // const [id, setId] = useState("");
-  // const [pw, setPw] = useState("");
+// const [id, setId] = useState("");
+// const [pw, setPw] = useState("");
 
 //   const [idValid, setIdValid] = useState(false);
 //   const [pwValid, setPwValid] = useState(false);
@@ -215,61 +231,61 @@ export default SignUp;
 //   };
 
 //   return (
-    // <Page>
-    //   <TitleWrap>로그인</TitleWrap>
-    //   <ContentWrap>
-    //     <InputTitle>아이디</InputTitle>
-    //     <InputWrap>
-    //       <Input
-    //         className="input"
-    //         type="text"
-    //         placeholder="이메일 주소"
-    //         value={id}
-    //         onChange={handleId}
-    //       />
-    //     </InputWrap>
-    //     <ErrorMessageWrap>
-    //       {!idValid && id.length > 0 && (
-    //         <div>올바른 아이디를 입력해주세요.</div>
-    //       )}
-    //     </ErrorMessageWrap>
-    //     <InputTitle>닉네임</InputTitle>
-    //     <InputWrap>
-    //       <Input
-    //         className="input"
-    //         type="text"
-    //         placeholder="닉네임(3~15자리)"
-    //         value={id}
-    //         onChange={handleId}
-    //       />
-    //     </InputWrap>
-    //     <ErrorMessageWrap>
-    //       {!idValid && id.length > 0 && (
-    //         <div>올바른 아이디를 입력해주세요.</div>
-    //       )}
-    //     </ErrorMessageWrap>
-    //     <InputTitle style={{ marginTop: "26px" }}>비밀번호</InputTitle>
-    //     <InputWrap>
-    //       <Input
-    //         className="input"
-    //         type="password"
-    //         placeholder="영문,"
-    //         value={pw}
-    //         onChange={handlePw}
-    //       />
-    //     </InputWrap>
-    //     <ErrorMessageWrap>
-    //       {!pwValid && pw.length > 0 && (
-    //         <div>최소 하나 이상의 대문자, 소문자, 숫자를 포함한 6~20자리 문자로 입력해주세요.</div>
-    //       )}
-    //     </ErrorMessageWrap>
-    //   </ContentWrap>
-    //   <BottomButton onClick={onClickConfirmButton} disabled={notAllow}>
-    //     로그인
-    //   </BottomButton>
-    //   {/* <BottomButton onClick={onClickConfirmButton} disabled={notAllow}>
-    //         회원가입
-    //       </BottomButton> */}
-    // </Page>
+// <Page>
+//   <TitleWrap>로그인</TitleWrap>
+//   <ContentWrap>
+//     <InputTitle>아이디</InputTitle>
+//     <InputWrap>
+//       <Input
+//         className="input"
+//         type="text"
+//         placeholder="이메일 주소"
+//         value={id}
+//         onChange={handleId}
+//       />
+//     </InputWrap>
+//     <ErrorMessageWrap>
+//       {!idValid && id.length > 0 && (
+//         <div>올바른 아이디를 입력해주세요.</div>
+//       )}
+//     </ErrorMessageWrap>
+//     <InputTitle>닉네임</InputTitle>
+//     <InputWrap>
+//       <Input
+//         className="input"
+//         type="text"
+//         placeholder="닉네임(3~15자리)"
+//         value={id}
+//         onChange={handleId}
+//       />
+//     </InputWrap>
+//     <ErrorMessageWrap>
+//       {!idValid && id.length > 0 && (
+//         <div>올바른 아이디를 입력해주세요.</div>
+//       )}
+//     </ErrorMessageWrap>
+//     <InputTitle style={{ marginTop: "26px" }}>비밀번호</InputTitle>
+//     <InputWrap>
+//       <Input
+//         className="input"
+//         type="password"
+//         placeholder="영문,"
+//         value={pw}
+//         onChange={handlePw}
+//       />
+//     </InputWrap>
+//     <ErrorMessageWrap>
+//       {!pwValid && pw.length > 0 && (
+//         <div>최소 하나 이상의 대문자, 소문자, 숫자를 포함한 6~20자리 문자로 입력해주세요.</div>
+//       )}
+//     </ErrorMessageWrap>
+//   </ContentWrap>
+//   <BottomButton onClick={onClickConfirmButton} disabled={notAllow}>
+//     로그인
+//   </BottomButton>
+//   {/* <BottomButton onClick={onClickConfirmButton} disabled={notAllow}>
+//         회원가입
+//       </BottomButton> */}
+// </Page>
 //   );
 // }

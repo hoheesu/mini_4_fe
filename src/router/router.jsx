@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
         element: <SignUp />,
       },
       {
-        path: "/vote/detail/",
+        path: "/vote/detail/:id",
         element: <VoteDetail />,
       },
       {
