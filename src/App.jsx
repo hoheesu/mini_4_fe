@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Header from "./components/layout/Header";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
   return (
     <>
       {/* {isUserValid ? <Outlet /> : <Navigate to={"log-in"}/>} */}
+      <Header />
       <Outlet />
     </>
   );

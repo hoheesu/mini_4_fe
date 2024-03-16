@@ -115,7 +115,7 @@ function SignUp() {
 
   return (
     <Page>
-      <TitleWrap>로그인</TitleWrap>
+      <TitleWrap>회원가입</TitleWrap>
       <ContentWrap>
         <InputTitle>아이디</InputTitle>
         <InputWrap>

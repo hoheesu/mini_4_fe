@@ -1,5 +1,5 @@
 import React from "react";
-import VoteDetailList from "../components/VoteDetailList";
+import VoteDetailList from "../components/VoteDetail/VoteDetailList";
 
 function VoteDetail() {
   return (
