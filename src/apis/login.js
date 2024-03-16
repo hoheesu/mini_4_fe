@@ -8,6 +8,7 @@ export const login = async (id, pw, navigate) => {
     const { accessToken, refreshToken } = result.data;
     localStorage.setItem("accessToken", accessToken);
     setCookie("refreshToken", refreshToken);
+    alert("로그인에 성공했습니다.");
     navigate("/");
     return result.data;
   } catch (error) {

@@ -152,6 +152,21 @@ function SignUp() {
             <div>최소 하나 이상의 대문자, 소문자, 숫자를 포함한 6~20자리 문자로 입력해주세요.</div>
           )}
         </ErrorMessageWrap>
+        <InputTitle style={{ marginTop: "26px" }}>비밀번호 확인</InputTitle>
+        <InputWrap>
+          <Input
+            className="input"
+            type="password"
+            placeholder="영문,"
+            value={pw}
+            onChange={handlePw}
+          />
+        </InputWrap>
+        <ErrorMessageWrap>
+          {!pwValid && pw.length > 0 && (
+            <div>최소 하나 이상의 대문자, 소문자, 숫자를 포함한 6~20자리 문자로 입력해주세요.</div>
+          )}
+        </ErrorMessageWrap>
       </ContentWrap>
       <BottomButton onClick={onClickSignUpButton} disabled={notAllow}>
         회원가입 후비고~
