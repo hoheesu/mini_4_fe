@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const Form = styled.form`
-  max-width: 500px;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 10px;
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 0 15px;
+  border-radius: 5px;
   background-color: #ffffff;
-  border: 2px solid #aaaaaa;
+  border: none;
 `;
 
 export const InputContainer = styled.div`
@@ -26,21 +26,19 @@ export const OptionInput = styled.input`
 
 export const TitleInput = styled.input`
   margin-bottom: 10px;
-  border-radius: 5px;
   background-color: transparent;
   border: none;
   &:focus {
     outline: none;
   }
-  font-size: 30px;
+  font-size: 25px;
 `;
 
 export const ContentInput = styled.input`
   margin-bottom: 10px;
-  border: 1px solid #ccc;
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid #e6e6e6;
+  border-bottom: 2px solid #e0e0e0;
   width: 100%;
   box-sizing: border-box;
   &:focus {
@@ -50,7 +48,7 @@ export const ContentInput = styled.input`
 `;
 
 export const RemoveButton = styled.button`
-  padding: 5px 10px;
+  padding: 0 7px;
   border: none;
   border-radius: 5px;
   background-color: #ff224e;
@@ -63,9 +61,8 @@ export const RemoveButton = styled.button`
 `;
 
 export const DateInput = styled.input`
-  margin: 0px 5px;
-  border-radius: 5px;
-  min-height: 30px;
+  border-radius: 3px;
+  min-height: 25px;
   border: none;
   font-weight: bold;
   background-color: #e6e6e6;
@@ -100,6 +97,7 @@ export const CreateButton = styled.button`
 export const OptionItemContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 10px;
   font-weight: 500;
 `;
@@ -109,6 +107,5 @@ export const CreateButtonWrapper = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 5px;
   margin-bottom: 10px;
 `;
