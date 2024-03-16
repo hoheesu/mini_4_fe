@@ -2,10 +2,14 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Main from "../pages/Main";
-import Login from "../pages/Login";
-import SignUp from "../pages/SignUp";
+// import Login from "../pages/Login";
+// import SignUp from "../pages/SignUp";
+import SignForm from "../components/user/SignForm";
 import VoteDetail from "../pages/VoteDetail";
 import VoteCreate from "../pages/VoteCreate";
+import PropTypes from 'prop-types'; 
+import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +26,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/signup",
-        element: <SignUp />,
+        element: <SignUp/>,
       },
       {
         path: "/vote/detail/:id",
