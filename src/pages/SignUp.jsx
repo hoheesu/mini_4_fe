@@ -60,12 +60,12 @@ function SignUp() {
   };
 
   const handleNickname = (e) => {
-    setPw(e.target.value);
+    setNickname(e.target.value);
     const regex = /^[a-zA-Z0-9\uAC00-\uD7A3]{3,15}$/;
     if (regex.test(e.target.value)) {
-      setPwValid(true);
+      setNicknameValid(true);
     } else {
-      setPwValid(false);
+      setNicknameValid(false);
     }
   };
   
@@ -105,7 +105,7 @@ function SignUp() {
 
   return (
     <Page>
-      <TitleWrap>로그인</TitleWrap>
+      <TitleWrap>회원가입</TitleWrap>
       <ContentWrap>
         <InputTitle>아이디</InputTitle>
         <InputWrap>
