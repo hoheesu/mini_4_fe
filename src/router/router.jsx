@@ -7,9 +7,10 @@ import Main from "../pages/Main";
 import SignForm from "../components/user/SignForm";
 import VoteDetail from "../pages/VoteDetail";
 import VoteCreate from "../pages/VoteCreate";
-import PropTypes from 'prop-types'; 
+import PropTypes from "prop-types";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
+import Comments from "../components/comments/Comments";
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/signup",
-        element: <SignUp/>,
+        element: <SignUp />,
       },
       {
         path: "/vote/detail/:id",
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "/vote/create",
         element: <VoteCreate />,
+      },
+      {
+        path: "/comments",
+        element: <Comments />,
       },
     ],
   },
