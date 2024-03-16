@@ -22,5 +22,7 @@ module.exports = {
   plugins: ["react"],
   rules: {
     "no-unused-vars": "off", // 사용되지 않는 변수 경고를 끔
+    "react/prop-types": 0,
+    "react/forbid-prop-types": 0,
   },
 };

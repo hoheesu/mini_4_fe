@@ -71,23 +71,4 @@ function PostWriterDetail({ voteDetail, onClickEditVoteDetail }) {
   );
 }
 
-// prop-types 추가
-PostWriterDetail.propTypes = {
-  voteDetail: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    startDate: PropTypes.string.isRequired,
-    endDate: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        content: PropTypes.string.isRequired,
-        count: PropTypes.number.isRequired,
-      }),
-    ).isRequired,
-    userId: PropTypes.number.isRequired,
-  }).isRequired,
-  onClickEditVoteDetail: PropTypes.func.isRequired,
-};
-
 export default PostWriterDetail;
