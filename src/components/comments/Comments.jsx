@@ -60,15 +60,13 @@ function Comments() {
                   <button onClick={() => onClickUpdateComment(item.id)}>
                     수정
                   </button>
+                  <button onClick={() => onClickDeleteComment(item.id)}>
+                    삭제
+                  </button>
                 </div>
               ) : (
                 ""
               )}
-              <div>
-                <button onClick={() => onClickDeleteComment(item.id)}>
-                  삭제
-                </button>
-              </div>
             </div>
           );
         })
