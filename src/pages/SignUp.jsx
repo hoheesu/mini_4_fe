@@ -9,6 +9,7 @@ import {
   ErrorMessageWrap,
   BottomButton,
   CustomLink,
+  ButtonContainer,
 } from "../components/user/Common";
 import { useNavigate } from "react-router-dom";
 import { signUp } from "../apis/signUp";
@@ -183,16 +184,18 @@ function SignUp() {
             <div>비밀번호가 일치하지 않습니다.</div>
           )}
         </ErrorMessageWrap>
+        <ButtonContainer>
+          <BottomButton onClick={onClickSignUpButton} disabled={notAllow}>
+            회원가입 후비고~
+          </BottomButton>
+          <CustomLink to="/login" style={{ textDecoration: "none" }}>
+            로그인하러 후비고~
+          </CustomLink>
+          <CustomLink to="/" style={{ textDecoration: "none" }}>
+            홈으로 후비고~
+          </CustomLink>
+        </ButtonContainer>
       </ContentWrap>
-      <BottomButton onClick={onClickSignUpButton} disabled={notAllow}>
-        회원가입 후비고~
-      </BottomButton>
-      <CustomLink to="/login" style={{ textDecoration: "none" }}>
-        로그인하러 후비고~
-      </CustomLink>
-      <CustomLink to="/" style={{ textDecoration: "none" }}>
-        홈으로 후비고~
-      </CustomLink>
     </Page>
   );
 }

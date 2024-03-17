@@ -23,7 +23,10 @@ function Header() {
         </li>
         <li>
           {localStorage.getItem("accessToken") ? (
-            <button onClick={onClickLogoutHandler}>로그아웃</button>
+            <>
+              <Link to="/vote/create">작성하기</Link>
+              <button onClick={onClickLogoutHandler}>로그아웃</button>
+            </>
           ) : (
             <Link to="/login">로그인</Link>
           )}
@@ -43,6 +46,7 @@ const HeaderContainer = styled.div`
   border-bottom: 1px solid #ccc;
 
   background-color: #fff;
+  z-index: 99;
 `;
 const HeaderFlex = styled.ul`
   display: flex;
