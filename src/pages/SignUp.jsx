@@ -38,26 +38,31 @@ import { useForm } from "../hooks/useForm";
 import { idCheck } from "../util/Id";
 import { passwordCheck } from "../util/Password";
 import { nicknameCheck } from "../util/Nickname";
+import { setCookie } from "../cookies/cookies";
+import { useMutation } from "@tanstack/react-query";
 
 function SignUp() {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
+  const [pw_check, setPw_check] = useState("");
   const [nickname, setNickname] = useState("");
+
 
   const [idValid, setIdValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
   const [nicknameValid, setNicknameValid] = useState(false);
+  const [pw_checkValid, setPw_checkValid] = useState("");
   const [notAllow, setNotAllow] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (idValid && nicknameValid && pwValid) {
+    if (idValid && nicknameValid && pwValid && pw_checkValid ) {
       setNotAllow(false);
       return;
     }
     setNotAllow(true);
-  }, [idValid, nicknameValid, pwValid]);
+  }, [idValid, nicknameValid, pwValid, pw_checkValid]);
 
   const handleId = (e) => {
     setId(e.target.value);
@@ -89,6 +94,47 @@ function SignUp() {
     }
   };
 
+  const handlePw_check = (e) => {
+    setPw_check(e.target.value);
+    const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,20}$/;
+    if (regex.test(e.target.value)) {
+      setPw_checkValid(true);
+    } else {
+      setPw_checkValid(false);
+      (false);
+    }
+  };
+
+  const signUpMutation = useMutation({
+    mutationFn: signUp,
+    onSuccess: (data) => {
+      console.log("data", data)
+      if (data.status === 200) {
+        alert("회원가입 안성~");
+        navigate("/login");
+      }
+    },
+    onError: (error) => {
+      alert("회원가입 실패 : ", error.response.data.message);
+    },
+  });
+
+  // try {
+  //   const result = await instance.post("/sign-up", {
+  //     email: id,
+  //     password: pw,
+  //     nickname,
+  //   });
+  //   localStorage.setItem("accessToken", result);
+  //   setCookie("refreshToken", result);
+  //   alert("회원가입 완료!");
+  //   return result.data;
+  // } catch (error) {
+  //   alert(error.response.data.message);
+  // }
+
+
+
   const onClickSignUpButton = async () => {
     if (id === "" || pw === "" || nickname === "") {
       alert("아이디, 비밀번호, 닉네임을 모두 입력해주세요.");
@@ -108,8 +154,7 @@ function SignUp() {
       );
       return;
     }
-    alert("회원가입 안성~");
-    await signUp(id, pw, nickname);
+    signUpMutation.mutate({id, pw, nickname});
     navigate("/login");
   };
 
@@ -152,7 +197,7 @@ function SignUp() {
           <Input
             className="input"
             type="password"
-            placeholder="영문,"
+            placeholder="영문, 숫자 조합 8자리 이상 20자리 이하"
             value={pw}
             onChange={handlePw}
           />
@@ -160,8 +205,7 @@ function SignUp() {
         <ErrorMessageWrap>
           {!pwValid && pw.length > 0 && (
             <div>
-              최소 하나 이상의 대문자, 소문자, 숫자를 포함한 6~20자리 문자로
-              입력해주세요.
+              최소 하나 이상의 대문자, 소문자, 숫자를 포함한 6~20자리 문자로 입력해주세요.
             </div>
           )}
         </ErrorMessageWrap>
@@ -170,14 +214,14 @@ function SignUp() {
           <Input
             className="input"
             type="password"
-            placeholder="영문,"
-            value={pw}
-            onChange={handlePw}
+            placeholder="비밀번호를 다시 입력하세요."
+            value={pw_check}
+            onChange={handlePw_check}
           />
         </InputWrap>
         <ErrorMessageWrap>
-          {!pwValid && pw.length > 0 && (
-            <div>최소 하나 이상의 대문자, 소문자, 숫자를 포함한 6~20자리 문자로 입력해주세요.</div>
+          {pw_check !== pw && pw_check.length > 0 && (
+            <div>비밀번호가 일치하지 않습니다.</div>
           )}
         </ErrorMessageWrap>
       </ContentWrap>
