@@ -13,8 +13,10 @@ export const getComment = async () => {
 
 export const createComment = async (content) => {
   try {
-    const res = await authInstance.post("/posts/30/comments", content);
-    return res.data;
+    const { data } = await authInstance.post("/posts/30/comments", content);
+    const result = { ...data, nickname: content.nickname };
+    alert("등록 완료");
+    return result;
   } catch (e) {
     if (e.response.status === 401) {
       alert(e.response.data.message);
@@ -24,8 +26,8 @@ export const createComment = async (content) => {
 
 export const deleteComment = async (commentId) => {
   try {
-    const res = await authInstance.delete(`/posts/30/comments/${commentId}`);
-    return res.data;
+    await authInstance.delete(`/posts/30/comments/${commentId}`);
+    return commentId;
   } catch (e) {
     if (e.response.status === 401) {
       alert(e.response.data.message);
@@ -33,10 +35,14 @@ export const deleteComment = async (commentId) => {
   }
 };
 
-export const updateComment = async (commentId) => {
+export const updateComment = async (comment) => {
   try {
-    const res = await authInstance.put(`/posts/30/comments/${commentId}`);
-    return res.data;
+    const { data } = await authInstance.put(
+      `/posts/30/comments/${comment.commentId}`,
+      comment,
+    );
+    let result = { ...data, nickname: comment.nickname };
+    return result;
   } catch (e) {
     if (e.response.status === 401) {
       alert(e.response.data.message);

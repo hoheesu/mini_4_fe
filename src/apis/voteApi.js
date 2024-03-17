@@ -12,6 +12,7 @@ export const getVoteListAll = async () => {
 export const createVote = async (vote) => {
   try {
     const res = await authInstance.post("/posts", vote);
+    alert("등록 완료");
     return res.data;
   } catch (e) {
     if (e.response.status === 401) {

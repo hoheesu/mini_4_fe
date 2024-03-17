@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createVote } from "../../apis/voteApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as S from "./VoteFormStyle";
+import { Page } from "../user/Common";
 function VoteForm() {
   const dateFormat = (vDate) => {
     let date = new Date();
@@ -80,7 +81,7 @@ function VoteForm() {
   // };
 
   const queryClient = useQueryClient();
-  const mutation = useMutation({
+  const createMutation = useMutation({
     mutationFn: createVote,
     onSuccess: () => {
       queryClient.invalidateQueries("votes");
@@ -107,7 +108,7 @@ function VoteForm() {
 
     if (isTrue) {
       try {
-        await mutation.mutate({ ...posts, options: updatedOptions });
+        await createMutation.mutate({ ...posts, options: updatedOptions });
         setPosts({
           title: "",
           content: "",
@@ -117,7 +118,6 @@ function VoteForm() {
           options: {},
         });
         setOptions([""]);
-        alert("등록 완료!");
       } catch (error) {
         console.error(error);
       }
@@ -129,7 +129,7 @@ function VoteForm() {
   useEffect(() => {}, []);
 
   return (
-    <>
+    <Page>
       <S.Form>
         <div>
           <S.TitleInput
@@ -197,7 +197,7 @@ function VoteForm() {
           </S.InputContainer>
         ))}
       </S.Form>
-    </>
+    </Page>
   );
 }
 
