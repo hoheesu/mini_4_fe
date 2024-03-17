@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
+export const Page = styled.div`
+  background-color: #f7f7f7;
+`;
+
 export const Form = styled.form`
-  max-width: 400px;
+  width: 100%;
   margin: 10px auto;
-  padding: 0 15px;
+  padding: 100px 40px;
   border-radius: 5px;
-  background-color: #ffffff;
   border: none;
 `;
 
@@ -19,9 +22,12 @@ export const InputContainer = styled.div`
 export const OptionInput = styled.input`
   padding: 10px;
   border-radius: 5px;
-  border: none;
   width: 100%;
-  background-color: #e6e6e6;
+  outline: none;
+  border: 1px solid #e2e0e0;
+  &:focus-within {
+    border: 1px solid #9e30f4;
+  }
 `;
 
 export const TitleInput = styled.input`
@@ -38,7 +44,7 @@ export const ContentInput = styled.input`
   margin-bottom: 10px;
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid #9e30f4;
   width: 100%;
   box-sizing: border-box;
   &:focus {
@@ -63,9 +69,12 @@ export const RemoveButton = styled.button`
 export const DateInput = styled.input`
   border-radius: 3px;
   min-height: 25px;
-  border: none;
+  cursor: pointer;
   font-weight: bold;
-  background-color: #e6e6e6;
+  border: 1px solid #e2e0e0;
+  &:focus-within {
+    border: 1px solid #9e30f4;
+  }
 `;
 
 export const CreateButton = styled.button`
@@ -73,7 +82,8 @@ export const CreateButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #e6e6e6;
+  background-color: #9e30f4;
+  color: white;
 `;
 
 // export const CheckInput = styled.input`

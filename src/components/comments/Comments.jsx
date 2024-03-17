@@ -8,7 +8,68 @@ import {
 } from "./commentsQuery";
 import { useDispatch, useSelector } from "react-redux";
 import { __getComments } from "../../redux/modules/commentSlice";
+import { InputWrap } from "../user/Common";
+import styled from "styled-components";
 
+const CreateButton = styled.button`
+  margin-right: 10px;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #9e30f4;
+  color: white;
+  &:disabled {
+    background-color: #dadada;
+    color: white;
+  }
+  margin-top: 14px;
+`;
+const CommentContainer = styled.div`
+  width: 100%;
+  padding: 0 40px;
+`;
+
+const CommentUserContainer = styled.div`
+  margin: 20px 0;
+  border-top: 1px solid #dadada;
+`;
+const CommentUser = styled.div`
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 20px;
+`;
+
+const CommnetUserWarpper = styled.div`
+  margin-top: 10px;
+`;
+
+const UserComment = styled.div`
+  font-size: 18px;
+`;
+
+const CommentInput = styled.input`
+  width: 100%;
+  outline: none;
+  border: none;
+  font-size: 17px;
+  font-weight: 400;
+  &::placeholder {
+    color: #dadada;
+  }
+`;
+
+const UserWrap = styled.div`
+  margin-top: 87px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #262626;
+`;
+const CommentButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  right: 10px;
+`;
 function Comments({ postId }) {
   const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
@@ -71,74 +132,76 @@ function Comments({ postId }) {
   if (getCommentQuery.isPending) {
     return <span>로딩중....</span>;
   }
-
   if (getCommentQuery.isError) {
     return <span>{console.log("error")}</span>;
   }
 
   return (
     <>
-      <div>
-        <span>{nickname}</span>
-        <div>
-          <input
+      <CommentContainer>
+        <UserWrap>{nickname}님 의견을 남겨 주세요.</UserWrap>
+        <InputWrap>
+          <CommentInput
             type="text"
             value={content}
             onChange={(e) => onChangeComments(e)}
-          ></input>
-        </div>
-        <div>
-          <button onClick={onClickCommentHandler}>등록</button>
-        </div>
-      </div>
-      {comment.length ? (
-        comment.map((item) => {
-          return (
-            <div key={item.id}>
-              <span>{item.nickname}</span>
-              <div>
-                {editCommentId === item.id ? (
-                  <input
-                    type="text"
-                    value={editcontent}
-                    onChange={(e) => setEditContent(e.target.value)}
-                  />
-                ) : (
-                  <div>{item.content}</div>
-                )}
-              </div>
-              {item.nickname === nickname ? (
-                <div>
+          ></CommentInput>
+        </InputWrap>
+        <CommentButtonWrapper>
+          <CreateButton onClick={onClickCommentHandler}>등록</CreateButton>
+        </CommentButtonWrapper>
+
+        {comment.length ? (
+          comment.map((item) => {
+            return (
+              <CommentUserContainer key={item.id}>
+                <CommentUser>작성자: {item.nickname}</CommentUser>
+                <CommnetUserWarpper>
                   {editCommentId === item.id ? (
-                    <button
-                      onClick={() =>
-                        onClickFinishUpdateComment(item.id, item.nickname)
-                      }
-                    >
-                      완료
-                    </button>
+                    <InputWrap>
+                      <CommentInput
+                        type="text"
+                        value={editcontent}
+                        onChange={(e) => setEditContent(e.target.value)}
+                      />
+                    </InputWrap>
                   ) : (
-                    <button
-                      onClick={() =>
-                        onClickUpdateComment(item.id, item.content)
-                      }
-                    >
-                      수정
-                    </button>
+                    <UserComment>{item.content}</UserComment>
                   )}
-                  <button onClick={() => onClickDeleteComment(item.id)}>
-                    삭제
-                  </button>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          );
-        })
-      ) : (
-        <div>댓글이 없어요!</div>
-      )}
+                </CommnetUserWarpper>
+                {item.nickname === nickname ? (
+                  <CommentButtonWrapper>
+                    {editCommentId === item.id ? (
+                      <CreateButton
+                        onClick={() =>
+                          onClickFinishUpdateComment(item.id, item.nickname)
+                        }
+                      >
+                        완료
+                      </CreateButton>
+                    ) : (
+                      <CreateButton
+                        onClick={() =>
+                          onClickUpdateComment(item.id, item.content)
+                        }
+                      >
+                        수정
+                      </CreateButton>
+                    )}
+                    <CreateButton onClick={() => onClickDeleteComment(item.id)}>
+                      삭제
+                    </CreateButton>
+                  </CommentButtonWrapper>
+                ) : (
+                  ""
+                )}
+              </CommentUserContainer>
+            );
+          })
+        ) : (
+          <div>댓글이 없어요!</div>
+        )}
+      </CommentContainer>
     </>
   );
 }

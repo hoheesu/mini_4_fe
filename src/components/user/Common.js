@@ -114,3 +114,7 @@ export const ErrorMessageWrap = styled.div`
   color: #ef0000;
   font-size: 12px;
 `;
+
+export const ButtonContainer = styled.div`
+  margin-top: 25px;
+`;
