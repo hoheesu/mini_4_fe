@@ -9,7 +9,7 @@ html {
     height: 100%;
 }
 body {
-    background-color: rgb(244, 244, 244);
+    background-color: #ddd !important;
     min-height: 100%;
 }
 a{
