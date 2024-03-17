@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { createVote } from "../../apis/voteApi";
+import React, { useEffect, useRef, useState } from "react";
+import { createVote, editVotePost } from "../../apis/voteApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import * as S from "./VoteFormStyle";
+import * as S from "../voteForm/VoteFormStyle";
 import { Page } from "../user/Common";
-function VoteForm() {
+import dateFormatter from "../../util/dateFormatter";
+import { useParams } from "react-router-dom";
+function EditVoteDetail({ voteDetail }) {
   const dateFormat = (vDate) => {
     let date = new Date();
     vDate === "today"
@@ -15,18 +17,23 @@ function VoteForm() {
     return `${year}-${month}-${day}`;
   };
 
-  const [options, setOptions] = useState([""]);
+  const optionDetail = voteDetail.options.map((option) => {
+    return option.content;
+  });
+  const { id } = useParams();
+  const [options, setOptions] = useState([...optionDetail]);
+
+  console.log(options);
   const [posts, setPosts] = useState({
-    title: "",
-    content: "",
-    startDate: dateFormat("today"),
-    endDate: dateFormat("tomorrow"),
-    // multiVote:false,
+    title: voteDetail.title,
+    content: voteDetail.content,
+    startDate: dateFormatter(voteDetail.startDate),
+    endDate: dateFormatter(voteDetail.endDate),
     options: {},
   });
 
   const onClickOptionAdd = () => {
-    if (options.length >= 6) {
+    if (options.length >= 5) {
       return alert("최대 5개 항목만 가능해요!");
     } else {
       setOptions([...options, ""]);
@@ -76,10 +83,6 @@ function VoteForm() {
     }
   };
 
-  // const toggleMultiVote = () => {
-  //   setPosts({ ...posts, multiVote: !posts.multiVote });
-  // };
-
   const queryClient = useQueryClient();
   const createMutation = useMutation({
     mutationFn: createVote,
@@ -107,20 +110,7 @@ function VoteForm() {
     }
 
     if (isTrue) {
-      try {
-        await createMutation.mutate({ ...posts, options: updatedOptions });
-        setPosts({
-          title: "",
-          content: "",
-          startDate: dateFormat("today"),
-          endDate: dateFormat("tomorrow"),
-          multiVote: false,
-          options: {},
-        });
-        setOptions([""]);
-      } catch (error) {
-        console.error(error);
-      }
+      editVotePost(id, { ...posts, options: updatedOptions });
     } else {
       return alert(alertText);
     }
@@ -175,7 +165,7 @@ function VoteForm() {
               voteCreateHandler();
             }}
           >
-            등록
+            수정
           </S.CreateButton>
           <S.CreateButton type="button" onClick={onClickOptionAdd}>
             +
@@ -201,4 +191,46 @@ function VoteForm() {
   );
 }
 
-export default VoteForm;
+export default EditVoteDetail;
+
+// import React from "react";
+// import dateFormatter from "../../util/dateFormatter";
+
+// function EditVoteDetail({ voteDetail }) {
+//   const [posts, setPosts] = useState({
+//     title: "",
+//     content: "",
+//     startDate: dateFormatter("today"),
+//     endDate: dateFormatter("tomorrow"),
+//     // multiVote:false,
+//     options: {},
+//   });
+//   return (
+//     <div>
+//       <>
+//         <span>제목</span>
+//         <input value={voteDetail.title} />
+//         <span>내용</span>
+//         <input type="text" value={voteDetail.content} />
+//         <span>시작날짜</span>
+//         <input type="date" value={dateFormatter(voteDetail.startDate)} />
+//         <span>종료날짜</span>
+//         <input type="date" value={dateFormatter(voteDetail.endDate)} />
+//         <span>종료날짜</span>
+//         <ul>
+//           {voteDetail.options.map((optionItem) => {
+//             return (
+//               <li key={optionItem.id}>
+//                 <input value={optionItem.content} />
+//               </li>
+//             );
+//           })}
+//         </ul>
+//         <button>수정 완료 </button>
+//         <button>수정 취소 </button>
+//       </>
+//     </div>
+//   );
+// }
+
+// export default EditVoteDetail;
