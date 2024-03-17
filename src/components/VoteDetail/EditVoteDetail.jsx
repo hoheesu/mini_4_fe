@@ -23,7 +23,6 @@ function EditVoteDetail({ voteDetail }) {
   const { id } = useParams();
   const [options, setOptions] = useState([...optionDetail]);
 
-  console.log(options);
   const [posts, setPosts] = useState({
     title: voteDetail.title,
     content: voteDetail.content,
@@ -192,45 +191,3 @@ function EditVoteDetail({ voteDetail }) {
 }
 
 export default EditVoteDetail;
-
-// import React from "react";
-// import dateFormatter from "../../util/dateFormatter";
-
-// function EditVoteDetail({ voteDetail }) {
-//   const [posts, setPosts] = useState({
-//     title: "",
-//     content: "",
-//     startDate: dateFormatter("today"),
-//     endDate: dateFormatter("tomorrow"),
-//     // multiVote:false,
-//     options: {},
-//   });
-//   return (
-//     <div>
-//       <>
-//         <span>제목</span>
-//         <input value={voteDetail.title} />
-//         <span>내용</span>
-//         <input type="text" value={voteDetail.content} />
-//         <span>시작날짜</span>
-//         <input type="date" value={dateFormatter(voteDetail.startDate)} />
-//         <span>종료날짜</span>
-//         <input type="date" value={dateFormatter(voteDetail.endDate)} />
-//         <span>종료날짜</span>
-//         <ul>
-//           {voteDetail.options.map((optionItem) => {
-//             return (
-//               <li key={optionItem.id}>
-//                 <input value={optionItem.content} />
-//               </li>
-//             );
-//           })}
-//         </ul>
-//         <button>수정 완료 </button>
-//         <button>수정 취소 </button>
-//       </>
-//     </div>
-//   );
-// }
-
-// export default EditVoteDetail;

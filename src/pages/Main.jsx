@@ -1,5 +1,4 @@
 import React from "react";
-import { instance } from "../apis/axios";
 import { useNavigate } from "react-router-dom";
 import VoteListMain from "../components/VoteListMain";
 import { removeCookie } from "../cookies/cookies";
@@ -8,7 +7,7 @@ function Main() {
   const navigate = useNavigate();
   const onClickLogoutHandler = () => {
     localStorage.removeItem("accessToken");
-    removeCookie("refreshToken")
+    removeCookie("refreshToken");
     navigate("/login");
   };
   return (

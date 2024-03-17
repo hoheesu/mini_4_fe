@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import { useNavigate, useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { removeVotePost, userVoteOption } from "../../apis/voteApi";
