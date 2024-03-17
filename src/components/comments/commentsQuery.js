@@ -14,14 +14,9 @@ import {
 import { useDispatch } from "react-redux";
 
 export const useGetComment = (postId) => {
-  console.log(postId);
-  const dispatch = useDispatch();
   return useQuery({
-    queryKey: ["comments"],
+    queryKey: ["comments", postId],
     queryFn: () => getComment(postId),
-    onSuccess: (data) => {
-      dispatch(__getComments(data));
-    },
   });
 };
 
