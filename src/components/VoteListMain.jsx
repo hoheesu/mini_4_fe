@@ -67,6 +67,10 @@ const VoteCategory = styled.div`
 `;
 const VoteListContainer = styled.div`
   padding-top: 30px;
+  width: 100%;
+  display: block;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default VoteListMain;
