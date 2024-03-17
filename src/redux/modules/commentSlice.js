@@ -10,7 +10,7 @@ const commentsSlice = createSlice({
       state.comment = action.payload;
     },
     __createComment: (state, action) => {
-      state.comment = [...state.comment, action.payload];
+      state.comment = [action.payload, ...state.comment];
     },
     __deleteComment: (state, action) => {
       state.comment = state.comment.filter(

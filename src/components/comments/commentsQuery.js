@@ -8,14 +8,15 @@ import {
 import {
   __createComment,
   __deleteComment,
+  __getComments,
   __updateComment,
 } from "../../redux/modules/commentSlice";
 import { useDispatch } from "react-redux";
 
-export const useGetComment = () => {
+export const useGetComment = (postId) => {
   return useQuery({
-    queryKey: ["comments"],
-    queryFn: getComment,
+    queryKey: ["comments", postId],
+    queryFn: () => getComment(postId),
   });
 };
 

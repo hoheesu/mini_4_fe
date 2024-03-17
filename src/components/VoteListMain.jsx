@@ -18,7 +18,6 @@ function VoteListMain() {
   useEffect(() => {
     (async () => {
       setIsLoading(false);
-      console.log("loading");
       const result = await getVoteListAll();
       setList(result);
       setIsLoading(true);

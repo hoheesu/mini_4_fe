@@ -4,6 +4,8 @@ import { jwtDecode } from "jwt-decode";
 import { detailVotePost } from "../../apis/voteApi";
 import VoteDetail from "./VoteDetail";
 import EditVoteDetail from "./EditVoteDetail";
+import Comments from "../comments/Comments";
+import { Page } from "../user/Common";
 
 function VoteDetailList() {
   const [voteDetail, setVoteDetail] = useState();
@@ -31,17 +33,9 @@ function VoteDetailList() {
       setVoteDetail(result);
     })();
   }, [id]);
-  console.log(voteDetail);
-  // useEffect(() => {
-  //   if (voteDetail) {
-  //     const optionDetail = voteDetail.options.map((option) => {
-  //       return option.content;
-  //     });
-  //     console.log(optionDetail);
-  //   }
-  // }, [voteDetail]);
+
   return (
-    <>
+    <Page>
       {!voteDetail ? (
         <p>로딩중...</p>
       ) : !postEdit ? (
@@ -51,26 +45,11 @@ function VoteDetailList() {
         />
       ) : (
         <EditVoteDetail voteDetail={voteDetail} />
-        // <>
-        //   <input value={voteDetail.title} />
-        //   <input type="text" value={voteDetail.content} />
-        //   <input type="date" value={dateFormatter(voteDetail.startDate)} />
-        //   <input type="date" value={dateFormatter(voteDetail.endDate)} />
-        //   <ul>
-        //     {voteDetail.options.map((optionItem) => {
-        //       return (
-        //         <li key={optionItem.id}>
-        //           <input value={optionItem.content} />
-        //         </li>
-        //       );
-        //     })}
-        //   </ul>
-        //   <button>수정 완료 </button>
-        //   <button>수정 취소 </button>
-        // </>
       )}
       {isVote ? <p>이미 투표를 하셨습니다.</p> : null}
-    </>
+
+      <Comments postId={id} />
+    </Page>
   );
 }
 

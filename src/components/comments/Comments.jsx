@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-import { Page } from "../user/Common";
 import {
   useGetComment,
   useCreateComment,
@@ -10,20 +9,18 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { __getComments } from "../../redux/modules/commentSlice";
 
-function Comments() {
-  // 기능 구현/ 프로젝트 완성 후 리팩토링
-  // 컴포넌트 분리
-  // customHook input 정도는 해주면 좋을듯?
+function Comments({ postId }) {
   const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
   const [editCommentId, setEditCommentId] = useState("");
   const [editcontent, setEditContent] = useState("");
   const dispatch = useDispatch();
-  const getCommentQuery = useGetComment();
+  const getCommentQuery = useGetComment(postId);
   const createCommentMutation = useCreateComment();
   const deleteCommentMutation = useDeleteComment();
   const updateCommentMutation = useUpdateComment();
   const comment = useSelector((state) => state.comments.comment);
+
   const onChangeComments = (e) => {
     setContent(e.target.value);
   };
@@ -32,12 +29,13 @@ function Comments() {
     if (content.trim() === "") {
       alert("글을 작성해 주세요");
     } else {
-      createCommentMutation.mutate({ nickname, content });
+      createCommentMutation.mutate({ postId, nickname, content });
+      setContent("");
     }
   };
 
   const onClickDeleteComment = (commentId) => {
-    deleteCommentMutation.mutate(commentId);
+    deleteCommentMutation.mutate({ commentId, postId });
   };
 
   const onClickUpdateComment = (commentId, content) => {
@@ -47,6 +45,7 @@ function Comments() {
 
   const onClickFinishUpdateComment = (commentId, nickname) => {
     updateCommentMutation.mutate({
+      postId,
       commentId,
       nickname,
       content: editcontent,
@@ -72,12 +71,13 @@ function Comments() {
   if (getCommentQuery.isPending) {
     return <span>로딩중....</span>;
   }
+
   if (getCommentQuery.isError) {
     return <span>{console.log("error")}</span>;
   }
 
   return (
-    <Page>
+    <>
       <div>
         <span>{nickname}</span>
         <div>
@@ -139,7 +139,7 @@ function Comments() {
       ) : (
         <div>댓글이 없어요!</div>
       )}
-    </Page>
+    </>
   );
 }
 
