@@ -18,7 +18,7 @@ export const createComment = async (contents) => {
       { nickname: contents.nickname, content: contents.content },
     );
     const result = { ...data, nickname: contents.nickname };
-    alert("등록 완료");
+    alert("작성 완료");
     return result;
   } catch (e) {
     if (e.response.status === 401) {
@@ -32,6 +32,7 @@ export const deleteComment = async (comment) => {
     await authInstance.delete(
       `/posts/${comment.postId}/comments/${comment.commentId}`,
     );
+    alert("삭제 완료");
     return comment.commentId;
   } catch (e) {
     if (e.response.status === 401) {
@@ -51,6 +52,7 @@ export const updateComment = async (comment) => {
       },
     );
     let result = { ...data, nickname: comment.nickname };
+    alert("수정 완료");
     return result;
   } catch (e) {
     if (e.response.status === 401) {
