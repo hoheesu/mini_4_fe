@@ -26,7 +26,6 @@ export const detailVotePost = async (id) => {
     const res = await authInstance.get(`/posts/${id}`);
     return res.data;
   } catch (error) {
-    console.log(error);
     alert(error.response.data.message);
   }
 };
