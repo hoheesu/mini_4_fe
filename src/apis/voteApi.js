@@ -32,8 +32,11 @@ export const detailVotePost = async (id) => {
 };
 
 export const editVotePost = async (id, postDetail) => {
+  console.log(postDetail);
   try {
-    const res = await authInstance.put(`/posts/${id}`, postDetail);
+    const res = await authInstance.patch(`/posts/${id}`, postDetail);
+    alert(res.data.message);
+    console.log(res);
     return res.data;
   } catch (error) {
     console.log(error);

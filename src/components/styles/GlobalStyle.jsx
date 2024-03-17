@@ -24,7 +24,7 @@ a{
         margin: 0;
         padding: 0;
         border: 0;
-        font-size: 10px;
+        font-size: 16px;
         vertical-align: baseline;
     }
     body{
@@ -33,7 +33,7 @@ a{
         background-color: #F6F9F0;
         margin-bottom: 100px;
     }
-    ol, ul{
+    ol, ul, li{
         list-style: none;
     }
     button {
