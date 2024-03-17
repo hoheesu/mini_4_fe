@@ -5,7 +5,6 @@ import { detailVotePost } from "../../apis/voteApi";
 import VoteDetail from "./VoteDetail";
 import EditVoteDetail from "./EditVoteDetail";
 import Comments from "../comments/Comments";
-import { Page } from "../user/Common";
 
 function VoteDetailList() {
   const [voteDetail, setVoteDetail] = useState();
@@ -35,7 +34,7 @@ function VoteDetailList() {
   }, [id]);
 
   return (
-    <Page>
+    <>
       {!voteDetail ? (
         <p>로딩중...</p>
       ) : !postEdit ? (
@@ -49,7 +48,7 @@ function VoteDetailList() {
       {isVote ? <p>이미 투표를 하셨습니다.</p> : null}
 
       <Comments postId={id} />
-    </Page>
+    </>
   );
 }
 
