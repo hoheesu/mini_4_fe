@@ -12,6 +12,7 @@ export const getVoteListAll = async () => {
 export const createVote = async (vote) => {
   try {
     const res = await authInstance.post("/posts", vote);
+    alert("등록 완료");
     return res.data;
   } catch (e) {
     if (e.response.status === 401) {
@@ -31,8 +32,11 @@ export const detailVotePost = async (id) => {
 };
 
 export const editVotePost = async (id, postDetail) => {
+  console.log(postDetail);
   try {
-    const res = await authInstance.put(`/posts/${id}`, postDetail);
+    const res = await authInstance.patch(`/posts/${id}`, postDetail);
+    alert(res.data.message);
+    console.log(res);
     return res.data;
   } catch (error) {
     console.log(error);

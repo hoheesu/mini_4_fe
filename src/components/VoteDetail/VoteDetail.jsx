@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types"; // 추가
 
 import { useNavigate, useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -7,7 +6,7 @@ import { removeVotePost, userVoteOption } from "../../apis/voteApi";
 import percentCalculate from "../../util/percentCalculate";
 import dateFormatter from "../../util/dateFormatter";
 
-function PostWriterDetail({ voteDetail, onClickEditVoteDetail }) {
+function VoteDetail({ voteDetail, onClickEditVoteDetail }) {
   const [optionVote, setOptionVote] = useState(0);
 
   const { id } = useParams();
@@ -34,14 +33,16 @@ function PostWriterDetail({ voteDetail, onClickEditVoteDetail }) {
   }, [voteDetail]);
 
   if (!voteDetail) {
-    return null; // or loading indicator
+    return null;
   }
 
   return (
     <>
-      <h3>{voteDetail.title}</h3>
-      <p>{voteDetail.content}</p>
+      <h3>제목 : {voteDetail.title}</h3>
+      <p>내용 : {voteDetail.content}</p>
+      <p>작성자 : {voteDetail.user.nickname}</p>
       <p>
+        투표기간 :
         {dateFormatter(voteDetail.startDate) +
           " ~ " +
           dateFormatter(voteDetail.endDate)}
@@ -71,23 +72,4 @@ function PostWriterDetail({ voteDetail, onClickEditVoteDetail }) {
   );
 }
 
-// prop-types 추가
-PostWriterDetail.propTypes = {
-  voteDetail: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    startDate: PropTypes.string.isRequired,
-    endDate: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        content: PropTypes.string.isRequired,
-        count: PropTypes.number.isRequired,
-      }),
-    ).isRequired,
-    userId: PropTypes.number.isRequired,
-  }).isRequired,
-  onClickEditVoteDetail: PropTypes.func.isRequired,
-};
-
-export default PostWriterDetail;
+export default VoteDetail;
