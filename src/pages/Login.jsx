@@ -8,10 +8,22 @@
 //   Button,
 //   CustomLink,
 // } from "../components/user/Common";
-import { Page, TitleWrap, ContentWrap, InputTitle, Input, InputWrap, ErrorMessageWrap, BottomButton, CustomLink } from "../components/user/Common";
+import {
+  Page,
+  TitleWrap,
+  ContentWrap,
+  InputTitle,
+  Input,
+  InputWrap,
+  ErrorMessageWrap,
+  BottomButton,
+  CustomLink,
+} from "../components/user/Common";
 import { useNavigate } from "react-router-dom";
 import { login } from "../apis/login";
 import { idCheck } from "../util/Id";
+import { useMutation } from "@tanstack/react-query";
+import { setCookie } from "../cookies/cookies";
 // import { useForm } from "../hooks/useForm";
 
 // function Login() {
@@ -21,25 +33,25 @@ import { idCheck } from "../util/Id";
 
 //   // const setIsUserValid = useBearStore((store)=> state.setIsUserValid);
 
-  // const onClickLogin = async () => {
-  //   // const dbId = "hh2ih@gmail.com"
-  //   // const dbPw = "1aaaaaQ"
+// const onClickLogin = async () => {
+//   // const dbId = "hh2ih@gmail.com"
+//   // const dbPw = "1aaaaaQ"
 
-  //   if (id === "" || pw === "") {
-  //     alert("아이디(메일주소)와 비밀번호를 모두 입력하세요.");
-  //     return;
-  //   }
-  //   if (!idCheck(id)) {
-  //     alert("올바른 아이디(메일주소) 형식을 입력하세요.");
-  //     return;
-  //   }
-  //   // if(id === dbId && pw === dbPw) {
-  //   //     // setIsUserValid(true);
-  //   //     //true
-  //   //     // "/"
-  //   // }
-  //   await login(id, pw, navigate);
-  // };
+//   if (id === "" || pw === "") {
+//     alert("아이디(메일주소)와 비밀번호를 모두 입력하세요.");
+//     return;
+//   }
+//   if (!idCheck(id)) {
+//     alert("올바른 아이디(메일주소) 형식을 입력하세요.");
+//     return;
+//   }
+//   // if(id === dbId && pw === dbPw) {
+//   //     // setIsUserValid(true);
+//   //     //true
+//   //     // "/"
+//   // }
+//   await login(id, pw, navigate);
+// };
 
 //   return (
 //     <Wrapper>
@@ -115,7 +127,30 @@ export default function Login() {
       setPwValid(false);
     }
   };
-  const onClickLoginButton = async () => {
+
+  const loginMutation = useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      const refreshToken = data.data.refreshToken;
+      const accessToken = data.data.accessToken;
+      if (data.status === 200) {
+        localStorage.setItem("accessToken", accessToken);
+        setCookie("refreshToken", refreshToken);
+        // localStorage.setItem("nickname", data.data.nickname);
+        alert(
+        `${data.data.nickname}님 로그인 성공하였습니다. 메인페이지로 이동합니다!`
+        );
+        navigate("/");
+      }
+    },
+    onError: (error) => {
+      console.log("로그인 실패 : ", error);
+      alert("로그인에 실패하였습니다!");
+    },
+  });
+
+  const onClickLoginButton = async (e) => {
+    e.preventDefault();
     if (id === "" || pw === "") {
       alert("아이디(메일주소)와 비밀번호를 모두 입력하세요.");
       return;
@@ -124,8 +159,8 @@ export default function Login() {
       alert("올바른 아이디(메일주소) 형식을 입력하세요.");
       return;
     }
-    alert("로그인에 성공했습니다.");
-    await login(id, pw, navigate);
+    loginMutation.mutate({id, pw});
+    navigate("/");
   };
 
   return (
@@ -152,22 +187,29 @@ export default function Login() {
           <Input
             className="input"
             type="password"
-            placeholder="영문,"
+            placeholder="최소 하나 이상의 대문자, 소문자, 숫자를 포함한 6~20자리 문자"
             value={pw}
             onChange={handlePw}
           />
         </InputWrap>
         <ErrorMessageWrap>
           {!pwValid && pw.length > 0 && (
-            <div>최소 하나 이상의 대문자, 소문자, 숫자를 포함한 6~20자리 문자로 입력해주세요.</div>
+            <div>
+              최소 하나 이상의 대문자, 소문자, 숫자를 포함한 6~20자리 문자로
+              입력해주세요.
+            </div>
           )}
         </ErrorMessageWrap>
       </ContentWrap>
       <BottomButton onClick={onClickLoginButton} disabled={notAllow}>
         로그인
       </BottomButton>
-      <CustomLink to='/signup' style={{ textDecoration: 'none' }}>회원가입 후비고~</CustomLink>
-      <CustomLink to='/' style={{ textDecoration: 'none' }}>홈으로 후비고~</CustomLink>
+      <CustomLink to="/signup" style={{ textDecoration: "none" }}>
+        회원가입 후비고~
+      </CustomLink>
+      <CustomLink to="/" style={{ textDecoration: "none" }}>
+        홈으로 후비고~
+      </CustomLink>
     </Page>
   );
 }

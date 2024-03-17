@@ -13,6 +13,33 @@ export const authInstance = axios.create({
   },
 });
 
+// import axios from 'axios';
+
+// // 로컬 스토리지에서 토큰 가져오기
+// const token = localStorage.getItem('accessToken');
+
+// // 인스턴스 생성
+// export const instance = axios.create({
+//   baseURL: process.env.REACT_APP_SERVER_URL,
+// });
+
+// // 인증된 요청을 보내기 위한 인스턴스 생성
+// export const authInstance = axios.create({
+//   baseURL: process.env.REACT_APP_SERVER_URL,
+//   headers: {
+//     authorization: token,
+//   },
+// });
+
+
+
+
+
+
+
+
+
+
 // ! Refresh토큰이 생성 되면 사용할 예정
 // authInstance.interceptors.response.use(
 //   (res) => res, //성공한 경우 걍 결과(result) 내보내줌ㅇㅇ
