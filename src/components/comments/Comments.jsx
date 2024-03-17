@@ -71,6 +71,7 @@ function Comments({ postId }) {
   if (getCommentQuery.isPending) {
     return <span>로딩중....</span>;
   }
+
   if (getCommentQuery.isError) {
     return <span>{console.log("error")}</span>;
   }
