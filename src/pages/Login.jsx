@@ -8,6 +8,7 @@ import {
   ErrorMessageWrap,
   BottomButton,
   CustomLink,
+  ButtonContainer,
 } from "../components/user/Common";
 import { useNavigate } from "react-router-dom";
 import { login } from "../apis/login";
@@ -122,16 +123,18 @@ export default function Login() {
             </div>
           )}
         </ErrorMessageWrap>
+        <ButtonContainer>
+          <BottomButton onClick={onClickLoginButton} disabled={notAllow}>
+            로그인
+          </BottomButton>
+          <CustomLink to="/signup" style={{ textDecoration: "none" }}>
+            회원가입 후비고~
+          </CustomLink>
+          <CustomLink to="/" style={{ textDecoration: "none" }}>
+            홈으로 후비고~
+          </CustomLink>
+        </ButtonContainer>
       </ContentWrap>
-      <BottomButton onClick={onClickLoginButton} disabled={notAllow}>
-        로그인
-      </BottomButton>
-      <CustomLink to="/signup" style={{ textDecoration: "none" }}>
-        회원가입 후비고~
-      </CustomLink>
-      <CustomLink to="/" style={{ textDecoration: "none" }}>
-        홈으로 후비고~
-      </CustomLink>
     </Page>
   );
 }
