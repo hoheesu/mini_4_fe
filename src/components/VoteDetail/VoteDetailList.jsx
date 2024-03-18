@@ -1,17 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { detailVotePost } from "../../apis/voteApi";
 import VoteDetail from "./VoteDetail";
 import EditVoteDetail from "./EditVoteDetail";
 import Comments from "../comments/Comments";
+import { useGetDetails } from "./voteQuery";
+import { useIsEditStore } from "./voteZustand";
 
 function VoteDetailList() {
   const [voteDetail, setVoteDetail] = useState();
-  const [postEdit, setPostEdit] = useState(false);
   const [isVote, setIsVote] = useState(false);
 
+  const postEdit = useIsEditStore((state) => state.isEdit);
+  const setPostEdit = useIsEditStore((state) => state.setIsEdit);
+
   const { id } = useParams();
+  const getDetailQuery = useGetDetails(id);
+
   let jwt = jwtDecode(localStorage.getItem("accessToken").substring(7));
   const userId = useRef(jwt.id);
 
@@ -20,8 +25,9 @@ function VoteDetailList() {
   };
 
   useEffect(() => {
-    (async () => {
-      const result = await detailVotePost(id);
+    console.log("시작");
+    if (getDetailQuery.isSuccess) {
+      const result = getDetailQuery.data;
       for (const option of result.options) {
         for (const voteHistory of option.voteHistory) {
           if (voteHistory.userId === userId.current) {
@@ -30,8 +36,8 @@ function VoteDetailList() {
         }
       }
       setVoteDetail(result);
-    })();
-  }, [id]);
+    }
+  }, [id, getDetailQuery.isSuccess, postEdit]);
 
   return (
     <>

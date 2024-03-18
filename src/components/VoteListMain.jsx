@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { getVoteListAll } from "../apis/voteApi";
 import VoteList from "./VoteList";
-import { create } from "zustand";
 import styled from "styled-components";
-
-const listStore = (set) => ({
-  listsAll: [],
-  setList: (list) => set(() => ({ listsAll: list })),
-});
-export const useListStore = create(listStore);
+import { useGetListsAll } from "./VoteDetail/voteQuery";
+import { useListStore } from "./VoteDetail/voteZustand";
 
 function VoteListMain() {
   const [isLoading, setIsLoading] = useState(false);
   const [listCategory, setListCategory] = useState("ongoing");
 
+  const getLists = useGetListsAll();
   const setList = useListStore((state) => state.setList);
 
   useEffect(() => {
-    (async () => {
-      setIsLoading(false);
-      const result = await getVoteListAll();
-      setList(result);
-      setIsLoading(true);
-    })();
-  }, []);
+    setIsLoading(false);
+    if (getLists.isSuccess) {
+      setList(getLists.data);
+    }
+    setIsLoading(true);
+  }, [getLists.isSuccess]);
 
+  if (getLists.isPending) {
+    return <span>로딩중....</span>;
+  }
   return (
     <>
       <VoteCategory>

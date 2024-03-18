@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getVoteListAll } from "../apis/voteApi";
 import { useNavigate } from "react-router-dom";
 import dateFormatter from "../util/dateFormatter";
-import { useListStore } from "./VoteListMain";
+import { useListStore } from "./VoteDetail/voteZustand";
 
 function VoteList({ listCategory }) {
   const voteList = useListStore((state) => state.listsAll);
-
   const navigate = useNavigate();
+
   switch (listCategory) {
     case "close":
       return voteList.map((voteItem) => {
