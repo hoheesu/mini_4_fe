@@ -30,9 +30,9 @@ export const detailVotePost = async (id) => {
   }
 };
 
-export const editVotePost = async (id, postDetail) => {
+export const editVotePost = async (postDetail) => {
   try {
-    const res = await authInstance.patch(`/posts/${id}`, postDetail);
+    const res = await authInstance.patch(`/posts/${postDetail.id}`, postDetail);
     alert(res.data.message);
     return res.data;
   } catch (error) {
@@ -46,7 +46,7 @@ export const removeVotePost = async (id) => {
     console.log(`Removing ${id}`);
     const res = await authInstance.delete(`/posts/${id}`);
     alert(res.data.message);
-    return res;
+    return id;
   } catch (error) {
     alert(error.response.data.message);
   }

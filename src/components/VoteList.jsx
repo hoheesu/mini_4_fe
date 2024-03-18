@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getVoteListAll } from "../apis/voteApi";
 import { useNavigate } from "react-router-dom";
 import dateFormatter from "../util/dateFormatter";
-import { useListStore } from "./VoteListMain";
+import { useListStore } from "./VoteDetail/voteZustand";
 import styled from "styled-components";
 
 const StyledButton = styled.button`
