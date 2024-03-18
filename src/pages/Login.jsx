@@ -16,8 +16,9 @@ import { idCheck } from "../util/Id";
 import { useMutation } from "@tanstack/react-query";
 import { setCookie } from "../cookies/cookies";
 import React, { useEffect, useState } from "react";
+import withAuth from "../hocs/hoc";
 
-export default function Login() {
+function Login() {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
 
@@ -138,3 +139,5 @@ export default function Login() {
     </Page>
   );
 }
+
+export default withAuth(Login, true);

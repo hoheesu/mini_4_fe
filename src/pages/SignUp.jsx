@@ -17,6 +17,7 @@ import { idCheck } from "../util/Id";
 import { passwordCheck } from "../util/Password";
 import { nicknameCheck } from "../util/Nickname";
 import { useMutation } from "@tanstack/react-query";
+import withAuth from "../hocs/hoc";
 
 function SignUp() {
   const [id, setId] = useState("");
@@ -200,4 +201,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default withAuth(SignUp, true);
