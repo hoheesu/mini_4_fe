@@ -4,13 +4,14 @@ import { jwtDecode } from "jwt-decode";
 import { userVoteOption } from "../../apis/voteApi";
 import percentCalculate from "../../util/percentCalculate";
 import dateFormatter from "../../util/dateFormatter";
-import { useDeleteDetails } from "./voteQuery";
+import { useDeleteDetails, useVoteOptions } from "./voteQuery";
 import styled from "styled-components";
 
 function VoteDetail({ voteDetail, onClickEditVoteDetail }) {
   const [optionVote, setOptionVote] = useState(0);
 
   const deleteDetailQuery = useDeleteDetails();
+  const voteOptionsQuery = useVoteOptions();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -20,9 +21,7 @@ function VoteDetail({ voteDetail, onClickEditVoteDetail }) {
   };
 
   const onClickVoteOption = (optionId) => {
-    console.log("ddd", optionId);
-    userVoteOption(id, { optionId });
-    // window.location.reload();
+    voteOptionsQuery.mutate({ id, optionId });
   };
 
   let jwt = jwtDecode(localStorage.getItem("accessToken").substring(7));

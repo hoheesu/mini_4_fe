@@ -36,7 +36,6 @@ export const editVotePost = async (postDetail) => {
     alert(res.data.message);
     return res.data;
   } catch (error) {
-    console.log(error);
     alert(error.response.data.message);
   }
 };
@@ -52,13 +51,15 @@ export const removeVotePost = async (id) => {
   }
 };
 
-export const userVoteOption = async (postId, optionId) => {
-  console.log(postId, optionId);
+export const userVoteOption = async (item) => {
   try {
-    const res = await authInstance.post(`/vote/${postId}`, optionId);
-    alert(res.data.message);
+    const res = await authInstance.post(`/vote/${item.id}`, {
+      optionId: item.optionId,
+    });
+    return res.data.message;
   } catch (error) {
-    alert(error.response.data.message);
-    console.log(error);
+    // console.log(error.response.data.message);
+    // alert(error.response.data.message);
+    return error.response.data.message;
   }
 };

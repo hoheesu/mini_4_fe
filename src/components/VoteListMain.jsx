@@ -53,6 +53,8 @@ function VoteListMain() {
 const VoteCategory = styled.div`
   position: fixed;
   top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 500px;
   display: flex;
   justify-content: center;
@@ -62,7 +64,7 @@ const VoteCategory = styled.div`
   background-color: #fff;
 `;
 const VoteListContainer = styled.div`
-  padding-top: 30px;
+  padding-top: 20px;
   width: 100%;
   display: block;
   justify-content: center;

@@ -39,6 +39,8 @@ const HeaderContainer = styled.div`
   position: fixed;
   display: flex;
   top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 500px;
   height: 50px;
   justify-content: center;
