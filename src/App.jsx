@@ -1,15 +1,49 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Outlet, useLocation } from "react-router-dom";
+import Header from "./components/layout/Header";
+import GlobalStyle from "./components/styles/GlobalStyle";
+import Footer from "./components/layout/Footer";
+import styled from "styled-components";
 
 function App() {
-  // const isUserValid = useBearStore((state) => state.isUserValid); 생각해보니까 로그인 안해도 조회 가능하게 하자고 했던거같음
+  const location = useLocation();
+  const hideHeaderPages = ["/login", "/signup"];
+
+  const shouldHideHeader = () => {
+    return hideHeaderPages.includes(location.pathname);
+  };
+
   return (
     <>
-      {/* {isUserValid ? <Outlet /> : <Navigate to={"log-in"}/>} */}
-      <Outlet />
+      <GlobalStyle />
+      <PageStyle>
+        {!shouldHideHeader() && <Header />}
+        <Outlet />
+        <Footer />
+      </PageStyle>
     </>
   );
 }
+
+const PageStyle = styled.section`
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 60px 0;
+  height: 100vh;
+  overflow-y: scroll;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: #9f30f432;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #9e30f4;
+  }
+`;
 
 export default App;

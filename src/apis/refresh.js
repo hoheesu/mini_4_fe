@@ -1,18 +1,19 @@
 import { instance } from "./axios";
-import { Cookies } from "react-cookie";
+import { setCookie } from "../cookies/cookies";
 
 export const getNewRefreshToken = async () => {
-    const accessToken = localStorage.getItem('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken'); // 쿠키로 바꾸기
-    const result = await instance.post('/refresh',
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = setCookie("refreshToken", refreshToken);
+  const result = await instance.post(
+    "/refresh",
     {
-        refreshToken // 보오디
+      refreshToken,
     },
     {
-        headers: {
-            authorization: accessToken // 헤에더
-        },
-    }
-    )
-    return result.data; //데이터 내보내기
-}
+      headers: {
+        authorization: accessToken,
+      },
+    },
+  );
+  return result.data;
+};

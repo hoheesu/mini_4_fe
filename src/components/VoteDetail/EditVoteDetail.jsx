@@ -1,29 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { createVote } from "../../apis/voteApi";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import * as S from "./VoteFormStyle";
+import React, { useState } from "react";
+import * as S from "../voteForm/VoteFormStyle";
 import { Page } from "../user/Common";
+import dateFormatter from "../../util/dateFormatter";
+import { useNavigate, useParams } from "react-router-dom";
+import { useUpdateDetails } from "./voteQuery";
 
-function VoteForm() {
-  const dateFormat = (vDate) => {
-    let date = new Date();
-    vDate === "today"
-      ? (date = new Date())
-      : (date = new Date(date.setDate(date.getDate() + 1)));
-    let year = date.getFullYear();
-    let month = ("0" + (1 + date.getMonth())).slice(-2);
-    let day = ("0" + date.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  };
+function EditVoteDetail({ voteDetail }) {
+  const optionDetail = voteDetail.options.map((option) => {
+    return option.content;
+  });
 
-  const [options, setOptions] = useState([""]);
+  const [options, setOptions] = useState([...optionDetail]);
   const [posts, setPosts] = useState({
-    title: "",
-    content: "",
-    startDate: dateFormat("today"),
-    endDate: dateFormat("tomorrow"),
+    title: voteDetail.title,
+    content: voteDetail.content,
+    startDate: dateFormatter(voteDetail.startDate),
+    endDate: dateFormatter(voteDetail.endDate),
     options: {},
   });
+
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const updateDetailsMutate = useUpdateDetails();
 
   const onClickOptionAdd = () => {
     if (options.length >= 5) {
@@ -32,7 +30,6 @@ function VoteForm() {
       setOptions([...options, ""]);
     }
   };
-
   const onClickOptionMinus = (index) => {
     if (options.length > 1) {
       const newOptions = [...options];
@@ -40,7 +37,6 @@ function VoteForm() {
       setOptions(newOptions);
     }
   };
-
   const onChangeOptionState = (index, e) => {
     const newOption = [...options];
     newOption[index] = e.target.value;
@@ -50,7 +46,6 @@ function VoteForm() {
   const onChangeTitle = (e) => {
     setPosts({ ...posts, title: e.target.value });
   };
-
   const onChangeContent = (e) => {
     setPosts({ ...posts, content: e.target.value });
   };
@@ -59,12 +54,9 @@ function VoteForm() {
     const selectedStartDate = e.target.value;
     const nextDay = new Date(selectedStartDate);
     nextDay.setDate(nextDay.getDate() + 1);
-    const formattedNextDay = nextDay.toISOString().split("T")[0];
-
     setPosts({
       ...posts,
       startDate: selectedStartDate,
-      endDate: formattedNextDay,
     });
   };
 
@@ -76,15 +68,7 @@ function VoteForm() {
     }
   };
 
-  const queryClient = useQueryClient();
-  const createMutation = useMutation({
-    mutationFn: createVote,
-    onSuccess: () => {
-      queryClient.invalidateQueries("votes");
-    },
-  });
-
-  const voteCreateHandler = async () => {
+  const editDetailHandler = async () => {
     let isTrue = true;
     let alertText = "";
 
@@ -104,16 +88,7 @@ function VoteForm() {
 
     if (isTrue) {
       try {
-        await createMutation.mutate({ ...posts, options: updatedOptions });
-        setPosts({
-          title: "",
-          content: "",
-          startDate: dateFormat("today"),
-          endDate: dateFormat("tomorrow"),
-          multiVote: false,
-          options: {},
-        });
-        setOptions([""]);
+        updateDetailsMutate.mutate({ ...posts, options: updatedOptions, id });
       } catch (error) {
         console.error(error);
       }
@@ -146,7 +121,7 @@ function VoteForm() {
           <S.DateInput
             type="date"
             name="startDate"
-            min={dateFormat("today")}
+            min={dateFormatter("today")}
             value={posts.startDate}
             onChange={(e) => onChangeStartDate(e)}
           />
@@ -158,16 +133,18 @@ function VoteForm() {
             value={posts.endDate}
             onChange={(e) => onChangeEndDate(e)}
           />
+          {/* <CheckInput type="checkbox" onClick={toggleMultiVote} />
+          <span>중복 여부</span> */}
         </S.OptionItemContainer>
         <S.CreateButtonWrapper>
           <S.CreateButton
             type="submit"
             onClick={(e) => {
               e.preventDefault();
-              voteCreateHandler();
+              editDetailHandler();
             }}
           >
-            등록
+            수정
           </S.CreateButton>
           <S.CreateButton type="button" onClick={onClickOptionAdd}>
             +
@@ -193,4 +170,4 @@ function VoteForm() {
   );
 }
 
-export default VoteForm;
+export default EditVoteDetail;

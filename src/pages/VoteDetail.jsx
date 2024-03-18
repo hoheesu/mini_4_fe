@@ -1,5 +1,6 @@
 import React from "react";
-import VoteDetailList from "../components/VoteDetailList";
+import VoteDetailList from "../components/VoteDetail/VoteDetailList";
+import withAuth from "../hocs/hoc";
 
 function VoteDetail() {
   return (
@@ -9,4 +10,4 @@ function VoteDetail() {
   );
 }
 
-export default VoteDetail;
+export default withAuth(VoteDetail, false);
