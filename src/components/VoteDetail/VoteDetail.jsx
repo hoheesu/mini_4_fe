@@ -60,20 +60,21 @@ function VoteDetail({ voteDetail, onClickEditVoteDetail }) {
         <OptionsWrap>
           {voteDetail.options.map((optionItem) => {
             return (
-              <OptionItemContainer
-                key={optionItem.id}
-                $bgc={percentCalculate(optionItem.count, optionVote)}
-              >
-                <OptionButton
-                  onClick={() => onClickVoteOption(optionItem.id)}
-                  value={optionItem.content}
+              <OptionItemWrapper key={optionItem.id}>
+                <OptionItemContainer
+                  $bgc={percentCalculate(optionItem.count, optionVote)}
                 >
-                  <span style={{ color: "black" }}>{optionItem.content} </span>
-                  <span style={{ color: "black" }}>
-                    {percentCalculate(optionItem.count, optionVote)}%
-                  </span>
-                </OptionButton>
-              </OptionItemContainer>
+                  <OptionButton
+                    onClick={() => onClickVoteOption(optionItem.id)}
+                    value={optionItem.content}
+                  >
+                    <span>{optionItem.content} </span>
+                    <span style={{ color: "black" }}>
+                      {percentCalculate(optionItem.count, optionVote)}%
+                    </span>
+                  </OptionButton>
+                </OptionItemContainer>
+              </OptionItemWrapper>
             );
           })}
         </OptionsWrap>
@@ -87,6 +88,11 @@ function VoteDetail({ voteDetail, onClickEditVoteDetail }) {
     </DetailContainer>
   );
 }
+const OptionItemWrapper = styled.div`
+  background-color: #b2b2b2;
+  border-radius: 0.5rem;
+`;
+
 const DetailContainer = styled.div`
   width: 100%;
   padding: 0 40px;
