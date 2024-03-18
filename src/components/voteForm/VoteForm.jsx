@@ -3,6 +3,7 @@ import { createVote } from "../../apis/voteApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as S from "./VoteFormStyle";
 import { Page } from "../user/Common";
+
 function VoteForm() {
   const dateFormat = (vDate) => {
     let date = new Date();
@@ -21,7 +22,6 @@ function VoteForm() {
     content: "",
     startDate: dateFormat("today"),
     endDate: dateFormat("tomorrow"),
-    // multiVote:false,
     options: {},
   });
 
@@ -76,10 +76,6 @@ function VoteForm() {
     }
   };
 
-  // const toggleMultiVote = () => {
-  //   setPosts({ ...posts, multiVote: !posts.multiVote });
-  // };
-
   const queryClient = useQueryClient();
   const createMutation = useMutation({
     mutationFn: createVote,
@@ -126,8 +122,6 @@ function VoteForm() {
     }
   };
 
-  useEffect(() => {}, []);
-
   return (
     <Page>
       <S.Form>
@@ -164,8 +158,6 @@ function VoteForm() {
             value={posts.endDate}
             onChange={(e) => onChangeEndDate(e)}
           />
-          {/* <CheckInput type="checkbox" onClick={toggleMultiVote} />
-          <span>중복 여부</span> */}
         </S.OptionItemContainer>
         <S.CreateButtonWrapper>
           <S.CreateButton
