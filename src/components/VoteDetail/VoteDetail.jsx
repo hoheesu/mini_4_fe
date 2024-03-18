@@ -5,7 +5,7 @@ import { userVoteOption } from "../../apis/voteApi";
 import percentCalculate from "../../util/percentCalculate";
 import dateFormatter from "../../util/dateFormatter";
 import { useDeleteDetails } from "./voteQuery";
-import { useListStore } from "./voteZustand";
+import styled from "styled-components";
 
 function VoteDetail({ voteDetail, onClickEditVoteDetail }) {
   const [optionVote, setOptionVote] = useState(0);
@@ -21,6 +21,7 @@ function VoteDetail({ voteDetail, onClickEditVoteDetail }) {
 
   const onClickVoteOption = (optionId) => {
     userVoteOption(id, { optionId });
+    // window.location.reload();
   };
 
   let jwt = jwtDecode(localStorage.getItem("accessToken").substring(7));
@@ -39,39 +40,104 @@ function VoteDetail({ voteDetail, onClickEditVoteDetail }) {
   }
 
   return (
-    <>
-      <h3>제목 : {voteDetail.title}</h3>
-      <p>내용 : {voteDetail.content}</p>
-      <p>작성자 : {voteDetail.user.nickname}</p>
-      <p>
-        투표기간 :
-        {dateFormatter(voteDetail.startDate) +
-          " ~ " +
-          dateFormatter(voteDetail.endDate)}
-      </p>
-      <ul>
-        {voteDetail.options.map((optionItem) => {
-          return (
-            <li key={optionItem.id}>
-              <button
-                onClick={() => onClickVoteOption(optionItem.id)}
-                value={optionItem.content}
-              >
-                {optionItem.content}
-              </button>
-              <span>{percentCalculate(optionItem.count, optionVote)}%</span>
-            </li>
-          );
-        })}
-      </ul>
-      {userId.current === voteDetail.userId ? (
-        <>
-          <button onClick={onClickEditVoteDetail}>수정</button>
-          <button onClick={onClickDeleteVoteDetail}>삭제</button>
-        </>
-      ) : null}
-    </>
+    <DetailContainer>
+      <FlexContainer>
+        <H3>
+          <>제목 :</> {voteDetail.title}
+        </H3>
+        <P>
+          <span>내용 :</span> {voteDetail.content}
+        </P>
+        <P>
+          <span>작성자 :</span> {voteDetail.user.nickname}
+        </P>
+        <P>
+          <span>투표기간 :</span>
+          {dateFormatter(voteDetail.startDate) +
+            " ~ " +
+            dateFormatter(voteDetail.endDate)}
+        </P>
+        <OptionsWrap>
+          {voteDetail.options.map((optionItem) => {
+            return (
+              <OptionItemContainer key={optionItem.id}>
+                <OptionButton
+                  onClick={() => onClickVoteOption(optionItem.id)}
+                  value={optionItem.content}
+                >
+                  <span>{optionItem.content} </span>
+                  <span>{percentCalculate(optionItem.count, optionVote)}%</span>
+                </OptionButton>
+              </OptionItemContainer>
+            );
+          })}
+        </OptionsWrap>
+        {userId.current === voteDetail.userId ? (
+          <UserButtonsWrap>
+            <button onClick={onClickEditVoteDetail}>수정</button>
+            <button onClick={onClickDeleteVoteDetail}>삭제</button>
+          </UserButtonsWrap>
+        ) : null}
+      </FlexContainer>
+    </DetailContainer>
   );
 }
+const DetailContainer = styled.div`
+  width: 100%;
+  padding: 0 40px;
+`;
+const FlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #e2e0e0;
+  border-radius: 0.5rem;
+`;
+const H3 = styled.h3`
+  font-size: 1.5rem;
+  font-weight: 500;
+`;
+const P = styled.p`
+  font-size: 1rem;
+`;
+
+const OptionsWrap = styled.ul`
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.7rem;
+`;
+const OptionItemContainer = styled.li`
+  background-color: #9e30f4;
+  border-radius: 0.5rem;
+`;
+const OptionButton = styled.button`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+  color: #fff;
+  > span:first-child {
+    width: 300px;
+    text-align: left;
+  }
+`;
+const UserButtonsWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  border-radius: 0.5rem;
+  button {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    color: white;
+    &:nth-child(1) {
+      background-color: #3040f4;
+    }
+    &:nth-child(2) {
+      background-color: #f43030;
+    }
+  }
+`;
 
 export default VoteDetail;

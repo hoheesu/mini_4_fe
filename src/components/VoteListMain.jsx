@@ -8,20 +8,19 @@ function VoteListMain() {
   const [isLoading, setIsLoading] = useState(false);
   const [listCategory, setListCategory] = useState("ongoing");
 
-  const getLists = useGetListsAll();
-  const setList = useListStore((state) => state.setList);
+  // const setList = useListStore((state) => state.setList);
 
-  useEffect(() => {
-    setIsLoading(false);
-    if (getLists.isSuccess) {
-      setList(getLists.data);
-    }
-    setIsLoading(true);
-  }, [getLists.isSuccess]);
+  // useEffect(() => {
+  //   setIsLoading(false);
+  //   if (getLists.isSuccess) {
+  //     // setList(getLists.data);
+  //   }
+  //   setIsLoading(true);
+  // }, [getLists.isSuccess]);
 
-  if (getLists.isPending) {
-    return <span>로딩중....</span>;
-  }
+  // if (getLists.isPending) {
+  //   return <span>로딩중....</span>;
+  // }
   return (
     <>
       <VoteCategory>
@@ -42,11 +41,11 @@ function VoteListMain() {
         </button>
       </VoteCategory>
       <VoteListContainer>
-        {isLoading ? (
-          <VoteList listCategory={listCategory} />
-        ) : (
-          <p>로딩중 ...</p>
-        )}
+        {/* {isLoading ? ( */}
+        <VoteList listCategory={listCategory} />
+        {/* ) : ( */}
+        {/* <p>로딩중 ...</p> */}
+        {/* )} */}
       </VoteListContainer>
     </>
   );

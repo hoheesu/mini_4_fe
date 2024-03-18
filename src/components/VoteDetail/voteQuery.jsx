@@ -1,11 +1,11 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   detailVotePost,
   editVotePost,
   getVoteListAll,
   removeVotePost,
 } from "../../apis/voteApi";
-import { useIsEditStore, useListStore } from "./voteZustand";
+import { useIsEditStore } from "./voteZustand";
 import { useParams } from "react-router-dom";
 
 export const useGetListsAll = () => {
@@ -22,24 +22,26 @@ export const useGetDetails = (postId) => {
   });
 };
 
-export const useUpdateDetails = () => {
+export const useUpdateDetails = (postId) => {
   const { id } = useParams();
+  const queryClient = useQueryClient();
+  const setPostEdit = useIsEditStore((state) => state.setIsEdit);
+
   return useMutation({
     mutationFn: editVotePost,
     onSuccess: () => {
-      // setPostEdit(false);
-      window.location.reload();
+      queryClient.invalidateQueries(["detailList", postId]);
+      setPostEdit(false);
+      // window.location.reload();
     },
   });
 };
-
 export const useDeleteDetails = () => {
-  const setDeleteListState = useListStore((state) => state.setDeleteList);
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: removeVotePost,
-    onSuccess: (id) => {
-      setDeleteListState(id);
-      window.location.reload();
+    onSuccess: () => {
+      queryClient.invalidateQueries(["listsAll"]);
     },
   });
 };
