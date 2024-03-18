@@ -3,6 +3,7 @@ import { createVote } from "../../apis/voteApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as S from "./VoteFormStyle";
 import { Page } from "../user/Common";
+import { useNavigate } from "react-router-dom";
 
 function VoteForm() {
   const dateFormat = (vDate) => {
@@ -15,7 +16,7 @@ function VoteForm() {
     let day = ("0" + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   };
-
+  const navigate = useNavigate();
   const [options, setOptions] = useState([""]);
   const [posts, setPosts] = useState({
     title: "",
@@ -114,6 +115,7 @@ function VoteForm() {
           options: {},
         });
         setOptions([""]);
+        navigate("/");
       } catch (error) {
         console.error(error);
       }
