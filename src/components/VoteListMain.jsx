@@ -41,11 +41,7 @@ function VoteListMain() {
         </button>
       </VoteCategory>
       <VoteListContainer>
-        {/* {isLoading ? ( */}
         <VoteList listCategory={listCategory} />
-        {/* ) : ( */}
-        {/* <p>로딩중 ...</p> */}
-        {/* )} */}
       </VoteListContainer>
     </>
   );
@@ -62,6 +58,7 @@ const VoteCategory = styled.div`
   height: 30px;
   border-bottom: 1px solid #ddd;
   background-color: #fff;
+  z-index: 99;
 `;
 const VoteListContainer = styled.div`
   padding-top: 20px;

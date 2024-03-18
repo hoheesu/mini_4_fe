@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { removeCookie, getCookie } from "../../cookies/cookies";
 import styled from "styled-components";
+import pickmypick from "../../assets/pickmypick.svg";
 
 function Header() {
   const navigate = useNavigate();
@@ -22,9 +23,18 @@ function Header() {
           <button onClick={handleBackButton}>🔙</button>
         </li>
         <li>
+          <button
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <ImageStyle src={pickmypick} alt="로고사진" />
+          </button>
+        </li>
+
+        <li>
           {localStorage.getItem("accessToken") ? (
             <>
-              <Link to="/vote/create">작성하기</Link>
               <button onClick={onClickLogoutHandler}>로그아웃</button>
             </>
           ) : (
@@ -56,6 +66,9 @@ const HeaderFlex = styled.ul`
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
+`;
+const ImageStyle = styled.img`
+  height: 108px;
 `;
 
 export default Header;

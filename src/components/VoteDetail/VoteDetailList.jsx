@@ -15,9 +15,6 @@ function VoteDetailList() {
   const postEdit = useIsEditStore((state) => state.isEdit);
   const setPostEdit = useIsEditStore((state) => state.setIsEdit);
 
-  // const setPostDetailZu = useDetailList((state) => state.setDetailList);
-  // const postDetailZu = useDetailList((state) => state.detailList);
-
   const { id } = useParams();
   const getDetailQuery = useGetDetails(id);
 
@@ -30,10 +27,6 @@ function VoteDetailList() {
     userIdt = userId();
   }
 
-  const onClickEditVoteDetail = () => {
-    confirm("수정하시겠습니까?") ? setPostEdit(true) : setPostEdit(false);
-  };
-
   useEffect(() => {
     if (getDetailQuery.isSuccess) {
       const result = getDetailQuery.data;
@@ -45,11 +38,18 @@ function VoteDetailList() {
         }
       }
       setVoteDetail(result);
-      // setPostDetailZu(result);
     }
   }, [id, getDetailQuery, postEdit]);
 
-  // console.log(postDetailZu);
+  const onClickEditVoteDetail = () => {
+    if (new Date(voteDetail.endDate).getTime() < new Date()) {
+      alert("종료된 투표는 수정할 수 없습니다.");
+    } else if (new Date(voteDetail.startDate).getTime() < new Date()) {
+      alert("진행중인 투표는 수정할 수 없습니다.");
+    } else {
+      confirm("수정하시겠습니까?") ? setPostEdit(true) : setPostEdit(false);
+    }
+  };
 
   return (
     <>
