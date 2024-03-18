@@ -1,6 +1,6 @@
 module.exports = {
   env: {
-    yarn: true,
+    // yarn: true,
     browser: true,
     es2021: true,
   },

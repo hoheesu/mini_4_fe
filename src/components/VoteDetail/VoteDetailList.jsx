@@ -15,8 +15,8 @@ function VoteDetailList() {
   const postEdit = useIsEditStore((state) => state.isEdit);
   const setPostEdit = useIsEditStore((state) => state.setIsEdit);
 
-  const setPostDetailZu = useDetailList((state) => state.setDetailList);
-  const postDetailZu = useDetailList((state) => state.detailList);
+  // const setPostDetailZu = useDetailList((state) => state.setDetailList);
+  // const postDetailZu = useDetailList((state) => state.detailList);
 
   const { id } = useParams();
   const getDetailQuery = useGetDetails(id);
@@ -45,11 +45,11 @@ function VoteDetailList() {
         }
       }
       setVoteDetail(result);
-      setPostDetailZu(result);
+      // setPostDetailZu(result);
     }
   }, [id, getDetailQuery, postEdit]);
 
-  console.log(postDetailZu);
+  // console.log(postDetailZu);
 
   return (
     <>

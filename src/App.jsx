@@ -31,10 +31,19 @@ const PageStyle = styled.section`
   padding: 60px 0;
   height: 100vh;
   overflow-y: scroll;
+
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: #fff;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: #9f30f432;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #9e30f4;
+  }
 `;
 
 export default App;

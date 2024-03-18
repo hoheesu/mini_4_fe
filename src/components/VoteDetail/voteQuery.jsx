@@ -4,6 +4,7 @@ import {
   editVotePost,
   getVoteListAll,
   removeVotePost,
+  userVoteOption,
 } from "../../apis/voteApi";
 import { useIsEditStore } from "./voteZustand";
 import { useParams } from "react-router-dom";
@@ -35,12 +36,26 @@ export const useUpdateDetails = (postId) => {
     },
   });
 };
+
 export const useDeleteDetails = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: removeVotePost,
     onSuccess: () => {
       queryClient.invalidateQueries(["listsAll"]);
+    },
+  });
+};
+
+export const useVoteOptions = () => {
+  return useMutation({
+    mutationFn: userVoteOption,
+    onSuccess: (data) => {
+      alert(data);
+      window.location.reload();
+    },
+    onError: (err) => {
+      alert("이미 이 투표에 참여하셨습니다.");
     },
   });
 };
