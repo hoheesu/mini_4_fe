@@ -129,10 +129,10 @@ function Login() {
             로그인
           </BottomButton>
           <CustomLink to="/signup" style={{ textDecoration: "none" }}>
-            회원가입 후비고~
+            회원가입
           </CustomLink>
           <CustomLink to="/" style={{ textDecoration: "none" }}>
-            홈으로 후비고~
+            홈으로
           </CustomLink>
         </ButtonContainer>
       </ContentWrap>
