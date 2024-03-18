@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import dateFormatter from "../util/dateFormatter";
 import { useListStore } from "./VoteDetail/voteZustand";
 import styled from "styled-components";
+import { useGetListsAll } from "./VoteDetail/voteQuery";
 
 const StyledButton = styled.button`
   width: 100%;
@@ -28,12 +29,17 @@ const StyledListItem = styled.li`
 `;
 
 function VoteList({ listCategory }) {
-  const voteList = useListStore((state) => state.listsAll);
-  const navigate = useNavigate();
+  // const voteList = useListStore((state) => state.listsAll);
+  const { data } = useGetListsAll();
+  console.log(data);
 
+  const navigate = useNavigate();
+  if (!data) {
+    return <p>로딩중</p>;
+  }
   switch (listCategory) {
     case "close":
-      return voteList.map((voteItem) => {
+      return data.map((voteItem) => {
         if (new Date(voteItem.endDate).getTime() < new Date()) {
           return (
             <StyledListItem key={voteItem.id}>
@@ -49,7 +55,7 @@ function VoteList({ listCategory }) {
       });
 
     case "ongoing":
-      return voteList
+      return data
         .sort((a, b) => new Date(a.endDate) - new Date(b.endDate))
         .map((voteItem) => {
           if (
@@ -73,8 +79,8 @@ function VoteList({ listCategory }) {
         });
 
     case "pending":
-      return voteList
-        .sort((a, b) => new Date(b.endDate) - new Date(a.endDate))
+      return data
+        .sort((a, b) => new Date(a.endDate) - new Date(b.endDate))
         .map((voteItem) => {
           if (new Date(voteItem.startDate).getTime() > new Date()) {
             return (

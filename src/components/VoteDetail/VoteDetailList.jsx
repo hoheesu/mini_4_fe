@@ -5,7 +5,8 @@ import VoteDetail from "./VoteDetail";
 import EditVoteDetail from "./EditVoteDetail";
 import Comments from "../comments/Comments";
 import { useGetDetails } from "./voteQuery";
-import { useIsEditStore } from "./voteZustand";
+import { useDetailList, useIsEditStore } from "./voteZustand";
+import styled from "styled-components";
 
 function VoteDetailList() {
   const [voteDetail, setVoteDetail] = useState();
@@ -14,6 +15,9 @@ function VoteDetailList() {
   const postEdit = useIsEditStore((state) => state.isEdit);
   const setPostEdit = useIsEditStore((state) => state.setIsEdit);
 
+  const setPostDetailZu = useDetailList((state) => state.setDetailList);
+  const postDetailZu = useDetailList((state) => state.detailList);
+
   const { id } = useParams();
   const getDetailQuery = useGetDetails(id);
 
@@ -21,8 +25,9 @@ function VoteDetailList() {
     let jwt = jwtDecode(localStorage.getItem("accessToken").substring(7));
     return useRef(jwt.id);
   };
+  let userIdt = "";
   if (localStorage.getItem("accessToken")) {
-    userId();
+    userIdt = userId();
   }
 
   const onClickEditVoteDetail = () => {
@@ -30,19 +35,21 @@ function VoteDetailList() {
   };
 
   useEffect(() => {
-    console.log("시작");
     if (getDetailQuery.isSuccess) {
       const result = getDetailQuery.data;
       for (const option of result.options) {
         for (const voteHistory of option.voteHistory) {
-          if (voteHistory.userId === userId.current) {
+          if (voteHistory.userId === userIdt.current) {
             setIsVote(true);
           }
         }
       }
       setVoteDetail(result);
+      setPostDetailZu(result);
     }
-  }, [id, getDetailQuery.isSuccess, postEdit]);
+  }, [id, getDetailQuery, postEdit]);
+
+  console.log(postDetailZu);
 
   return (
     <>
@@ -56,11 +63,26 @@ function VoteDetailList() {
       ) : (
         <EditVoteDetail voteDetail={voteDetail} />
       )}
-      {isVote ? <p>이미 투표를 하셨습니다.</p> : null}
+      {isVote ? (
+        <IsVote>이미 투표를 하셨습니다.</IsVote>
+      ) : (
+        <VoteMessage>투표를 해주세요</VoteMessage>
+      )}
 
       <Comments postId={id} />
     </>
   );
 }
+
+const IsVote = styled.p`
+  margin-top: 1rem;
+  color: #f43030;
+  font-size: 1rem;
+`;
+const VoteMessage = styled.p`
+  margin-top: 1rem;
+  color: #3040f4;
+  font-size: 1rem;
+`;
 
 export default VoteDetailList;

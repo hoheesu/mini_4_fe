@@ -87,7 +87,6 @@ function EditVoteDetail({ voteDetail }) {
     }
 
     if (isTrue) {
-      console.log("수정클릭");
       try {
         updateDetailsMutate.mutate({ ...posts, options: updatedOptions, id });
       } catch (error) {
