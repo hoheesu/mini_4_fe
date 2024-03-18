@@ -17,8 +17,13 @@ function VoteDetailList() {
   const { id } = useParams();
   const getDetailQuery = useGetDetails(id);
 
-  let jwt = jwtDecode(localStorage.getItem("accessToken").substring(7));
-  const userId = useRef(jwt.id);
+  const userId = () => {
+    let jwt = jwtDecode(localStorage.getItem("accessToken").substring(7));
+    return useRef(jwt.id);
+  };
+  if (localStorage.getItem("accessToken")) {
+    userId();
+  }
 
   const onClickEditVoteDetail = () => {
     confirm("수정하시겠습니까?") ? setPostEdit(true) : setPostEdit(false);
