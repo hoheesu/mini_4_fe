@@ -60,13 +60,18 @@ function VoteDetail({ voteDetail, onClickEditVoteDetail }) {
         <OptionsWrap>
           {voteDetail.options.map((optionItem) => {
             return (
-              <OptionItemContainer key={optionItem.id}>
+              <OptionItemContainer
+                key={optionItem.id}
+                $bgc={percentCalculate(optionItem.count, optionVote)}
+              >
                 <OptionButton
-                  onClick={() => onClickVoteOption(optionItem.id)}
+                  onClick={() => onClickVoteOption(optionItem.id, userId)}
                   value={optionItem.content}
                 >
                   <span>{optionItem.content} </span>
-                  <span>{percentCalculate(optionItem.count, optionVote)}%</span>
+                  <span style={{ color: "black" }}>
+                    {percentCalculate(optionItem.count, optionVote)}%
+                  </span>
                 </OptionButton>
               </OptionItemContainer>
             );
@@ -106,13 +111,16 @@ const OptionsWrap = styled.ul`
   display: flex;
   flex-direction: column;
   row-gap: 0.7rem;
+  border-radius: 0.5rem;
 `;
+
 const OptionItemContainer = styled.li`
+  width: ${(props) => props.$bgc}%;
   background-color: #9e30f4;
   border-radius: 0.5rem;
 `;
 const OptionButton = styled.button`
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   justify-content: center;
   padding: 0.5rem;
@@ -122,7 +130,8 @@ const OptionButton = styled.button`
     text-align: left;
   }
 `;
-const UserButtonsWrap = styled.div`
+
+const UserButtonsWrap = styled.span`
   display: flex;
   justify-content: center;
   gap: 3rem;

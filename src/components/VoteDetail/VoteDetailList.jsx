@@ -5,7 +5,7 @@ import VoteDetail from "./VoteDetail";
 import EditVoteDetail from "./EditVoteDetail";
 import Comments from "../comments/Comments";
 import { useGetDetails } from "./voteQuery";
-import { useIsEditStore } from "./voteZustand";
+import { useDetailList, useIsEditStore } from "./voteZustand";
 import styled from "styled-components";
 
 function VoteDetailList() {
@@ -14,6 +14,9 @@ function VoteDetailList() {
 
   const postEdit = useIsEditStore((state) => state.isEdit);
   const setPostEdit = useIsEditStore((state) => state.setIsEdit);
+
+  const setPostDetailZu = useDetailList((state) => state.setDetailList);
+  const postDetailZu = useDetailList((state) => state.detailList);
 
   const { id } = useParams();
   const getDetailQuery = useGetDetails(id);
@@ -32,7 +35,6 @@ function VoteDetailList() {
   };
 
   useEffect(() => {
-    console.log("시작");
     if (getDetailQuery.isSuccess) {
       const result = getDetailQuery.data;
       for (const option of result.options) {
@@ -42,10 +44,12 @@ function VoteDetailList() {
           }
         }
       }
-      console.log(result);
       setVoteDetail(result);
+      setPostDetailZu(result);
     }
   }, [id, getDetailQuery, postEdit]);
+
+  console.log(postDetailZu);
 
   return (
     <>

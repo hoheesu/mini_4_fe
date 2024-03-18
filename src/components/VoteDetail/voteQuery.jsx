@@ -32,7 +32,6 @@ export const useUpdateDetails = (postId) => {
     onSuccess: () => {
       queryClient.invalidateQueries(["detailList", postId]);
       setPostEdit(false);
-      // window.location.reload();
     },
   });
 };
