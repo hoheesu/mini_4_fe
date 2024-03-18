@@ -1,33 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { getVoteListAll } from "../apis/voteApi";
 import VoteList from "./VoteList";
-import { create } from "zustand";
-
-const listStore = (set) => ({
-  listsAll: [],
-  setList: (list) => set(() => ({ listsAll: list })),
-});
-export const useListStore = create(listStore);
+import styled from "styled-components";
+import { useGetListsAll } from "./VoteDetail/voteQuery";
+import { useListStore } from "./VoteDetail/voteZustand";
 
 function VoteListMain() {
   const [isLoading, setIsLoading] = useState(false);
   const [listCategory, setListCategory] = useState("ongoing");
 
+  const getLists = useGetListsAll();
   const setList = useListStore((state) => state.setList);
 
   useEffect(() => {
-    (async () => {
-      setIsLoading(false);
-      console.log("loading");
-      const result = await getVoteListAll();
-      setList(result);
-      setIsLoading(true);
-    })();
-  }, []);
+    setIsLoading(false);
+    if (getLists.isSuccess) {
+      setList(getLists.data);
+    }
+    setIsLoading(true);
+  }, [getLists.isSuccess]);
 
+  if (getLists.isPending) {
+    return <span>로딩중....</span>;
+  }
   return (
     <>
-      <div>
+      <VoteCategory>
         <button value="close" onClick={(e) => setListCategory(e.target.value)}>
           종료된 투표{listCategory === "close" ? "✅" : null}
         </button>
@@ -43,10 +40,34 @@ function VoteListMain() {
         >
           투표 예정{listCategory === "pending" ? "✅" : null}
         </button>
-      </div>
-      {isLoading ? <VoteList listCategory={listCategory} /> : <p>로딩중 ...</p>}
+      </VoteCategory>
+      <VoteListContainer>
+        {isLoading ? (
+          <VoteList listCategory={listCategory} />
+        ) : (
+          <p>로딩중 ...</p>
+        )}
+      </VoteListContainer>
     </>
   );
 }
+const VoteCategory = styled.div`
+  position: fixed;
+  top: 50px;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+`;
+const VoteListContainer = styled.div`
+  padding-top: 30px;
+  width: 100%;
+  display: block;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default VoteListMain;

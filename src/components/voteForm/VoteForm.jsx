@@ -26,7 +26,7 @@ function VoteForm() {
   });
 
   const onClickOptionAdd = () => {
-    if (options.length >= 6) {
+    if (options.length >= 5) {
       return alert("최대 5개 항목만 가능해요!");
     } else {
       setOptions([...options, ""]);

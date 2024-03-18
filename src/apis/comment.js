@@ -1,8 +1,8 @@
 import { instance, authInstance } from "./axios";
 
-export const getComment = async () => {
+export const getComment = async (postId) => {
   try {
-    const res = await instance.get("/posts/30/comments");
+    const res = await instance.get(`/posts/${postId}/comments`);
     return res.data;
   } catch (e) {
     if (e.response.status === 401) {
@@ -11,11 +11,14 @@ export const getComment = async () => {
   }
 };
 
-export const createComment = async (content) => {
+export const createComment = async (contents) => {
   try {
-    const { data } = await authInstance.post("/posts/30/comments", content);
-    const result = { ...data, nickname: content.nickname };
-    alert("등록 완료");
+    const { data } = await authInstance.post(
+      `/posts/${contents.postId}/comments`,
+      { nickname: contents.nickname, content: contents.content },
+    );
+    const result = { ...data, nickname: contents.nickname };
+    alert("작성 완료");
     return result;
   } catch (e) {
     if (e.response.status === 401) {
@@ -24,10 +27,13 @@ export const createComment = async (content) => {
   }
 };
 
-export const deleteComment = async (commentId) => {
+export const deleteComment = async (comment) => {
   try {
-    await authInstance.delete(`/posts/30/comments/${commentId}`);
-    return commentId;
+    await authInstance.delete(
+      `/posts/${comment.postId}/comments/${comment.commentId}`,
+    );
+    alert("삭제 완료");
+    return comment.commentId;
   } catch (e) {
     if (e.response.status === 401) {
       alert(e.response.data.message);
@@ -38,10 +44,15 @@ export const deleteComment = async (commentId) => {
 export const updateComment = async (comment) => {
   try {
     const { data } = await authInstance.put(
-      `/posts/30/comments/${comment.commentId}`,
-      comment,
+      `/posts/${comment.postId}/comments/${comment.commentId}`,
+      {
+        commentId: comment.commentId,
+        nickname: comment.nickname,
+        content: comment.content,
+      },
     );
     let result = { ...data, nickname: comment.nickname };
+    alert("수정 완료");
     return result;
   } catch (e) {
     if (e.response.status === 401) {

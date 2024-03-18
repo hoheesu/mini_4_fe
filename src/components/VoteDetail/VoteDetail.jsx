@@ -1,19 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import { useNavigate, useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { removeVotePost, userVoteOption } from "../../apis/voteApi";
+import { userVoteOption } from "../../apis/voteApi";
 import percentCalculate from "../../util/percentCalculate";
 import dateFormatter from "../../util/dateFormatter";
+import { useDeleteDetails } from "./voteQuery";
+import { useListStore } from "./voteZustand";
 
 function VoteDetail({ voteDetail, onClickEditVoteDetail }) {
   const [optionVote, setOptionVote] = useState(0);
 
+  const deleteDetailQuery = useDeleteDetails();
   const { id } = useParams();
   const navigate = useNavigate();
 
   const onClickDeleteVoteDetail = () => {
-    removeVotePost(id);
+    deleteDetailQuery.mutate(id);
     navigate("/");
   };
 

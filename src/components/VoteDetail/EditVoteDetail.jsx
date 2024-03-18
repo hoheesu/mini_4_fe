@@ -1,29 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { createVote, editVotePost } from "../../apis/voteApi";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
 import * as S from "../voteForm/VoteFormStyle";
 import { Page } from "../user/Common";
 import dateFormatter from "../../util/dateFormatter";
-import { useParams } from "react-router-dom";
-function EditVoteDetail({ voteDetail }) {
-  const dateFormat = (vDate) => {
-    let date = new Date();
-    vDate === "today"
-      ? (date = new Date())
-      : (date = new Date(date.setDate(date.getDate() + 1)));
-    let year = date.getFullYear();
-    let month = ("0" + (1 + date.getMonth())).slice(-2);
-    let day = ("0" + date.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  };
+import { useNavigate, useParams } from "react-router-dom";
+import { useUpdateDetails } from "./voteQuery";
 
+function EditVoteDetail({ voteDetail }) {
   const optionDetail = voteDetail.options.map((option) => {
     return option.content;
   });
-  const { id } = useParams();
-  const [options, setOptions] = useState([...optionDetail]);
 
-  console.log(options);
+  const [options, setOptions] = useState([...optionDetail]);
   const [posts, setPosts] = useState({
     title: voteDetail.title,
     content: voteDetail.content,
@@ -32,6 +19,10 @@ function EditVoteDetail({ voteDetail }) {
     options: {},
   });
 
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const updateDetailsMutate = useUpdateDetails();
+
   const onClickOptionAdd = () => {
     if (options.length >= 5) {
       return alert("최대 5개 항목만 가능해요!");
@@ -39,7 +30,6 @@ function EditVoteDetail({ voteDetail }) {
       setOptions([...options, ""]);
     }
   };
-
   const onClickOptionMinus = (index) => {
     if (options.length > 1) {
       const newOptions = [...options];
@@ -47,7 +37,6 @@ function EditVoteDetail({ voteDetail }) {
       setOptions(newOptions);
     }
   };
-
   const onChangeOptionState = (index, e) => {
     const newOption = [...options];
     newOption[index] = e.target.value;
@@ -57,7 +46,6 @@ function EditVoteDetail({ voteDetail }) {
   const onChangeTitle = (e) => {
     setPosts({ ...posts, title: e.target.value });
   };
-
   const onChangeContent = (e) => {
     setPosts({ ...posts, content: e.target.value });
   };
@@ -66,12 +54,9 @@ function EditVoteDetail({ voteDetail }) {
     const selectedStartDate = e.target.value;
     const nextDay = new Date(selectedStartDate);
     nextDay.setDate(nextDay.getDate() + 1);
-    const formattedNextDay = nextDay.toISOString().split("T")[0];
-
     setPosts({
       ...posts,
       startDate: selectedStartDate,
-      endDate: formattedNextDay,
     });
   };
 
@@ -83,15 +68,7 @@ function EditVoteDetail({ voteDetail }) {
     }
   };
 
-  const queryClient = useQueryClient();
-  const createMutation = useMutation({
-    mutationFn: createVote,
-    onSuccess: () => {
-      queryClient.invalidateQueries("votes");
-    },
-  });
-
-  const voteCreateHandler = async () => {
+  const editDetailHandler = async () => {
     let isTrue = true;
     let alertText = "";
 
@@ -110,13 +87,16 @@ function EditVoteDetail({ voteDetail }) {
     }
 
     if (isTrue) {
-      editVotePost(id, { ...posts, options: updatedOptions });
+      console.log("수정클릭");
+      try {
+        updateDetailsMutate.mutate({ ...posts, options: updatedOptions, id });
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       return alert(alertText);
     }
   };
-
-  useEffect(() => {}, []);
 
   return (
     <Page>
@@ -142,7 +122,7 @@ function EditVoteDetail({ voteDetail }) {
           <S.DateInput
             type="date"
             name="startDate"
-            min={dateFormat("today")}
+            min={dateFormatter("today")}
             value={posts.startDate}
             onChange={(e) => onChangeStartDate(e)}
           />
@@ -162,7 +142,7 @@ function EditVoteDetail({ voteDetail }) {
             type="submit"
             onClick={(e) => {
               e.preventDefault();
-              voteCreateHandler();
+              editDetailHandler();
             }}
           >
             수정
@@ -192,45 +172,3 @@ function EditVoteDetail({ voteDetail }) {
 }
 
 export default EditVoteDetail;
-
-// import React from "react";
-// import dateFormatter from "../../util/dateFormatter";
-
-// function EditVoteDetail({ voteDetail }) {
-//   const [posts, setPosts] = useState({
-//     title: "",
-//     content: "",
-//     startDate: dateFormatter("today"),
-//     endDate: dateFormatter("tomorrow"),
-//     // multiVote:false,
-//     options: {},
-//   });
-//   return (
-//     <div>
-//       <>
-//         <span>제목</span>
-//         <input value={voteDetail.title} />
-//         <span>내용</span>
-//         <input type="text" value={voteDetail.content} />
-//         <span>시작날짜</span>
-//         <input type="date" value={dateFormatter(voteDetail.startDate)} />
-//         <span>종료날짜</span>
-//         <input type="date" value={dateFormatter(voteDetail.endDate)} />
-//         <span>종료날짜</span>
-//         <ul>
-//           {voteDetail.options.map((optionItem) => {
-//             return (
-//               <li key={optionItem.id}>
-//                 <input value={optionItem.content} />
-//               </li>
-//             );
-//           })}
-//         </ul>
-//         <button>수정 완료 </button>
-//         <button>수정 취소 </button>
-//       </>
-//     </div>
-//   );
-// }
-
-// export default EditVoteDetail;
