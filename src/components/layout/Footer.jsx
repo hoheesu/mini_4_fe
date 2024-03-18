@@ -1,21 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 function Footer() {
-  const navigate = useNavigate();
-  const handleGoToMainButton = () => {
-    navigate("/");
-  };
   return (
     <FooterContainer>
-      <nav>
-        <ul>
-          <li>
-            <button onClick={handleGoToMainButton}>PickMyPick🏠</button>
-          </li>
-        </ul>
-      </nav>
+      <Link to="/vote/create">작성하기</Link>
     </FooterContainer>
   );
 }
