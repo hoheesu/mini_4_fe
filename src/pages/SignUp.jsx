@@ -187,13 +187,13 @@ function SignUp() {
         </ErrorMessageWrap>
         <ButtonContainer>
           <BottomButton onClick={onClickSignUpButton} disabled={notAllow}>
-            회원가입 후비고~
+            회원가입
           </BottomButton>
           <CustomLink to="/login" style={{ textDecoration: "none" }}>
-            로그인하러 후비고~
+            로그인
           </CustomLink>
           <CustomLink to="/" style={{ textDecoration: "none" }}>
-            홈으로 후비고~
+            홈으로
           </CustomLink>
         </ButtonContainer>
       </ContentWrap>

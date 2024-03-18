@@ -52,13 +52,11 @@ export const removeVotePost = async (id) => {
   }
 };
 
-export const userVoteOption = async (postId, optionId, userId) => {
-  // 옵션 Id 는 객체
-  console.log("==클릭", postId, optionId, userId);
+export const userVoteOption = async (postId, optionId) => {
+  console.log(postId, optionId);
   try {
     const res = await authInstance.post(`/vote/${postId}`, optionId);
     alert(res.data.message);
-    console.log(optionId);
   } catch (error) {
     alert(error.response.data.message);
     console.log(error);
