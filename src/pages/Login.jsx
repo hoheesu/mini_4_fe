@@ -136,10 +136,6 @@ export default function Login() {
       if (data.status === 200) {
         localStorage.setItem("accessToken", accessToken);
         setCookie("refreshToken", refreshToken);
-        // localStorage.setItem("nickname", data.data.nickname);
-        alert(
-        `${data.data.nickname}님 로그인 성공하였습니다. 메인페이지로 이동합니다!`
-        );
         navigate("/");
       }
     },

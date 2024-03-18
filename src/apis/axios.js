@@ -13,6 +13,20 @@ export const authInstance = axios.create({
   },
 });
 
+
+authInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("accessToken") || "";
+    if (token) {
+    config.headers["Authorization"] = `${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    console.error(error);
+    return Promise.reject(error);
+  },
+);
 // import axios from 'axios';
 
 // // 로컬 스토리지에서 토큰 가져오기
